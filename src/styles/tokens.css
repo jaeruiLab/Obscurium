@@ -1,0 +1,48 @@
+/* "Flame Test" palette — keep in sync with src/scene/palette.ts (enforced by palette.test.ts) */
+:root {
+  --copper: #3fe0a0;
+  --lilac: #b48cff;
+  --sodium: #ffb340;
+  --lithium: #ff5a4a;
+  --panel: #15171c;
+  --deep: #08090b;
+  --body: #ece4d6;
+  --muted: #a39a8c;
+  --ink: #5a4636;
+  --copperInk: #0b5a40;
+  --cream: #fbf1df;
+  --skyTop: #f2b48a;
+  --skyHorizon: #fde6cc;
+
+  --tier-bedrock: #9c7b58;
+  --tier-ore: #e0843a;
+  --tier-vein: #e8c547;
+  --tier-trace: #d8dde3;
+  --tier-rare: #c77dff;
+  --tier-mole: #3fe0a0;
+  --tier-technical: #5aa9e6;
+
+  --cat-alkali: #e8735a;
+  --cat-alkaline-earth: #e8a35a;
+  --cat-transition: #7fa7c9;
+  --cat-post-transition: #8fb59a;
+  --cat-metalloid: #c2b25c;
+  --cat-nonmetal: #5cc28a;
+  --cat-halogen: #5cc2c2;
+  --cat-noble-gas: #b48cff;
+  --cat-lanthanide: #d98cbf;
+  --cat-actinide: #e07a9a;
+  --cat-unknown: #8a8f99;
+
+  --line: #2c3038;
+  --line-bright: #4a4f59;
+
+  --font-pixel: 'Silkscreen', 'Courier New', monospace;
+  /* Silkscreen has no true lowercase, so element symbols and units (He, Cf, m) use VT323 */
+  --font-symbol: 'VT323', 'JetBrains Mono', monospace;
+  --font-mono: 'JetBrains Mono', ui-monospace, 'Cascadia Mono', Consolas, monospace;
+  --track: 0.25em;
+  --track-wide: 0.35em;
+
+  --ease-out: cubic-bezier(0.2, 0.8, 0.2, 1);
+}
