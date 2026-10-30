@@ -1,15 +1,17 @@
 import { el } from '../lib/elements';
 import { METERS_PER_POINT } from '../lib/scoring';
 import type { Answer } from '../lib/types';
+import { useCountUp } from '../state/useCountUp';
 
 type Props = { answers: Answer[]; total: number; current: number; points: number };
 
 /** Rig-LCD readouts plus seven specimen slots that fill with each dug element. */
 export function Hud({ answers, total, current, points }: Props) {
-  const depth = points * METERS_PER_POINT;
+  const depth = useCountUp(points * METERS_PER_POINT, 1100);
+  const shownPoints = useCountUp(points, 1100);
   return (
     <header className="hud">
-      <div className="lcd" aria-label={`Depth ${depth} meters`}>
+      <div className="lcd" aria-label={`Depth ${points * METERS_PER_POINT} meters`}>
         <span className="lcd-label">DEPTH</span>
         <span className="lcd-value copper">
           <i aria-hidden="true">-8,888m</i>
@@ -31,7 +33,7 @@ export function Hud({ answers, total, current, points }: Props) {
         <span className="lcd-label">SCORE</span>
         <span className="lcd-value sodium">
           <i aria-hidden="true">888</i>
-          <b>{points}</b>
+          <b>{shownPoints}</b>
         </span>
       </div>
     </header>

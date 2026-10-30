@@ -2,7 +2,7 @@ import { scoreAnswer, METERS_PER_POINT } from '../lib/scoring';
 import type { Answer, AnswerVia, Prompt } from '../lib/types';
 
 export type RunConfig = {
-  kind: 'daily' | 'pack';
+  kind: 'daily' | 'challenge' | 'pack';
   dateKey: string;
   digNumber: number | null;
   packId?: string;

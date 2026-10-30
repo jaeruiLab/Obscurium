@@ -95,6 +95,9 @@ const elements: Element[] = rows.map((r) => {
     boilK: c.boilK !== undefined ? c.boilK : num(r.BoilingPoint),
     density: c.density !== undefined ? c.density : num(r.Density),
     electronegativity: num(r.Electronegativity),
+    ionizationEnergy: num(r.IonizationEnergy),
+    // drop "(predicted)" notes and the stray space PubChem sometimes puts after the core
+    electronConfiguration: r.ElectronConfiguration.replace(/\s*\((predicted|calculated)\)/, '').replace(/\]\s+/, ']').trim(),
     radioactive: c.stable === 0,
     stableIsotopes: c.stable,
     occurrence: c.occ,

@@ -21,7 +21,18 @@ function fields(e: Element): Record<string, string | null> {
     year: e.discoveryYear == null ? 'antiquity' : String(e.discoveryYear),
     discoverers: e.discoverers.length ? joinNames(e.discoverers) : null,
     stable: String(e.stableIsotopes),
+    en: e.electronegativity == null ? null : String(e.electronegativity),
+    ie: e.ionizationEnergy == null ? null : String(e.ionizationEnergy),
+    config: e.electronConfiguration ? superscriptConfig(e.electronConfiguration) : null,
+    block: e.block,
   };
+}
+
+const SUP: Record<string, string> = { 0: '⁰', 1: '¹', 2: '²', 3: '³', 4: '⁴', 5: '⁵', 6: '⁶', 7: '⁷', 8: '⁸', 9: '⁹' };
+
+/** "[Ar]3d5 4s1" → "[Ar]3d⁵ 4s¹" */
+export function superscriptConfig(config: string): string {
+  return config.replace(/([spdf])(\d+)/g, (_, l: string, n: string) => l + [...n].map((d) => SUP[d]).join(''));
 }
 
 function joinNames(names: string[]) {

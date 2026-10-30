@@ -32,6 +32,9 @@ export type SaveData = {
   history: Record<string, DigRecord>;
   streak: { current: number; best: number; lastDate: string | null };
   inProgress: InProgress | null;
+  /** Challenge mode is saved separately and never touches the streak */
+  challengeHistory: Record<string, DigRecord>;
+  challengeInProgress: InProgress | null;
 };
 
 export const DEFAULT_SETTINGS: Settings = {
@@ -52,6 +55,8 @@ export function freshSave(): SaveData {
     history: {},
     streak: { current: 0, best: 0, lastDate: null },
     inProgress: null,
+    challengeHistory: {},
+    challengeInProgress: null,
   };
 }
 
@@ -76,6 +81,8 @@ export function loadSave(): SaveData {
           history: parsed.history ?? {},
           streak: { ...base.streak, ...parsed.streak },
           inProgress: parsed.inProgress ?? null,
+          challengeHistory: parsed.challengeHistory ?? {},
+          challengeInProgress: parsed.challengeInProgress ?? null,
         };
       }
     }

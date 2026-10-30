@@ -1,5 +1,5 @@
 import { describe, expect, it } from 'vitest';
-import { promptsForDate } from '../lib/daily';
+import { challengeForDate, promptsForDate } from '../lib/daily';
 import { freshSave, type SaveData } from '../lib/storage';
 import { buildAnswer } from './gameReducer';
 import { settleInProgress } from './useGame';
@@ -38,6 +38,23 @@ describe('settleInProgress (anti-replay)', () => {
     const s = settleInProgress(withProgress(3, true), '2026-11-04');
     expect(s.inProgress).toBeNull();
     expect(s.history).toEqual({});
+  });
+
+  it('drops progress saved against an older prompt bank', () => {
+    const s = withProgress(2, true);
+    s.inProgress!.answers[0] = { ...s.inProgress!.answers[0], promptId: 'retired-prompt' };
+    expect(settleInProgress(s, today).inProgress).toBeNull();
+  });
+
+  it('settles Challenge separately and never touches the streak', () => {
+    const ch = challengeForDate(today);
+    const s = freshSave();
+    s.challengeInProgress = { dateKey: today, answers: ch.slice(0, 6).map((p) => buildAnswer(p, p.moleZ, 'type')), open: true };
+    const settled = settleInProgress(s, today, 'challenge');
+    expect(settled.challengeHistory[today].answers).toHaveLength(7);
+    expect(settled.challengeInProgress).toBeNull();
+    expect(settled.history).toEqual({});
+    expect(settled.streak.current).toBe(0);
   });
 
   it('never overwrites a completed dig', () => {

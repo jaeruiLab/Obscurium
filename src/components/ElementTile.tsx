@@ -1,10 +1,12 @@
 import { CATEGORY_GLYPH, CATEGORY_LABEL, el } from '../lib/elements';
+import { PixelDissolve } from './PixelDissolve';
 
 /** Full-information periodic-table tile, colored by category. Only shown after an answer. */
-export function ElementTile({ z, size = 'lg', glyph = false }: { z: number; size?: 'lg' | 'md' | 'sm'; glyph?: boolean }) {
+export function ElementTile({ z, size = 'lg', glyph = false, materialize = false }: { z: number; size?: 'lg' | 'md' | 'sm'; glyph?: boolean; materialize?: boolean }) {
   const e = el(z);
   return (
     <div className={`etile etile-${size} cat-${e.category}`} role="img" aria-label={`${e.name}, ${e.symbol}, atomic number ${e.z}, ${CATEGORY_LABEL[e.category]}`}>
+      {materialize && <PixelDissolve block={7} duration={460} delay={120} pattern="dither" />}
       <span className="etile-z">{e.z}</span>
       {glyph && <span className="etile-glyph" aria-hidden="true">{CATEGORY_GLYPH[e.category]}</span>}
       <span className="etile-sym">{e.symbol}</span>

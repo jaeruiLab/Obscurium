@@ -1,6 +1,7 @@
 import { SECONDS_PER_PROMPT } from '../lib/daily';
 import type { Prompt } from '../lib/types';
 import { useNow } from '../state/useTimer';
+import { PixelDissolve } from './PixelDissolve';
 import { TypeInput } from './TypeInput';
 
 type Props = {
@@ -48,6 +49,7 @@ export function PromptCard(props: Props) {
 
   return (
     <section className="prompt-card panel" aria-labelledby="prompt-text">
+      <PixelDissolve block={14} duration={360} />
       <div className="pc-head">
         <span className="tag">{prompt.category}</span>
         <span className="pc-count">
@@ -64,10 +66,11 @@ export function PromptCard(props: Props) {
           drilling · the clock starts in <b>{countdown}</b>
         </p>
       ) : (
-        <>
+        <div className="pc-live">
+          <PixelDissolve block={8} duration={260} pattern="dither" accent={null} />
           {showTimer ? <Fuse remainingMs={remaining} /> : <div className="fuse-hidden" role="timer" aria-label={`${Math.ceil(remaining / 1000)} seconds left`} />}
           <TypeInput key={prompt.id} onSubmit={props.onSubmit} onMiss={props.onMiss} acceptNumbers={props.acceptNumbers} autoFocus disabled={!live} />
-        </>
+        </div>
       )}
     </section>
   );

@@ -9,8 +9,12 @@ type Props = {
   streak: number;
   doneToday: boolean;
   resumable: boolean;
+  challengeDone: boolean;
+  challengeResumable: boolean;
   onBegin: () => void;
   onViewToday: () => void;
+  onChallenge: () => void;
+  onViewChallenge: () => void;
   onEvent: () => void;
   onPrivacy: () => void;
 };
@@ -23,7 +27,8 @@ export function Wordmark() {
   );
 }
 
-export function TitleScreen({ digNumber, streak, doneToday, resumable, onBegin, onViewToday, onEvent, onPrivacy }: Props) {
+export function TitleScreen(props: Props) {
+  const { digNumber, streak, doneToday, resumable, challengeDone, challengeResumable, onBegin, onViewToday, onEvent, onPrivacy } = props;
   const [howOpen, setHowOpen] = useState(false);
   const now = useNow(doneToday, 1000);
 
@@ -36,17 +41,19 @@ export function TitleScreen({ digNumber, streak, doneToday, resumable, onBegin, 
       </div>
 
       <div className="title-column">
-        <button type="button" className="howto-toggle" aria-expanded={howOpen} onClick={() => setHowOpen(!howOpen)}>
-          {howOpen ? '▼' : '►'} HOW TO PLAY
-        </button>
+        <div className="title-links">
+          <button type="button" className="howto-toggle" aria-expanded={howOpen} onClick={() => setHowOpen(!howOpen)}>
+            {howOpen ? '▼' : '►'} HOW TO PLAY
+          </button>
+          <button type="button" className="privacy-link" onClick={onPrivacy}>
+            Privacy
+          </button>
+        </div>
         {howOpen && (
           <div className="howto-inline panel">
             <HowToPlay />
           </div>
         )}
-        <button type="button" className="privacy-link" onClick={onPrivacy}>
-          Privacy
-        </button>
 
         <button type="button" className="event-card" onClick={onEvent}>
           <span className="event-tab">BETA · LIMITED TIME</span>
@@ -64,6 +71,13 @@ export function TitleScreen({ digNumber, streak, doneToday, resumable, onBegin, 
             <span className="arrow">▼</span> {resumable ? 'RESUME DIG' : 'BEGIN DIG'} <span className="arrow">▼</span>
           </button>
         )}
+
+        <button type="button" className="btn btn-challenge" onClick={challengeDone ? props.onViewChallenge : props.onChallenge}>
+          <span className="challenge-label">
+            ◆ {challengeDone ? 'VIEW TODAY’S CHALLENGE' : challengeResumable ? 'RESUME CHALLENGE' : 'CHALLENGE DIG'} ◆
+          </span>
+          <small>niche prompts · etymology, history, nuclear</small>
+        </button>
 
         <div className="title-footer">
           <span className="footer-meta">

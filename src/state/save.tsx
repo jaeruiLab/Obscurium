@@ -53,6 +53,12 @@ export function SaveProvider({ children, initial }: { children: ReactNode; initi
   return <SaveCtx.Provider value={api}>{children}</SaveCtx.Provider>;
 }
 
+/** Reduced-motion preference; safe to call outside a SaveProvider (falls back to the html class). */
+export function useReducedMotion(): boolean {
+  const api = useContext(SaveCtx);
+  return api ? api.reducedMotion : typeof document !== 'undefined' && document.documentElement.classList.contains('reduce-motion');
+}
+
 export function useSave(): SaveApi {
   const api = useContext(SaveCtx);
   if (!api) throw new Error('useSave outside SaveProvider');

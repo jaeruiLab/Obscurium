@@ -5,6 +5,7 @@ import { METERS_PER_POINT } from '../lib/scoring';
 import type { Answer, Prompt } from '../lib/types';
 import { AnswerMap } from './AnswerMap';
 import { ElementTile } from './ElementTile';
+import { PixelDissolve } from './PixelDissolve';
 import { TierBadge } from './TierBadge';
 
 type Props = {
@@ -32,6 +33,7 @@ export function Reveal({ prompt, answer, index, total, glyphs, onNext }: Props) 
 
   return (
     <section className="reveal panel" aria-labelledby="reveal-title">
+      <PixelDissolve block={14} duration={380} />
       <div className="pc-head">
         <span className="tag">{prompt.category}</span>
         <span className="pc-count">
@@ -40,8 +42,8 @@ export function Reveal({ prompt, answer, index, total, glyphs, onNext }: Props) 
       </div>
       <p className="rv-prompt">{prompt.text}</p>
 
-      <div className="rv-main">
-        {answer.z != null ? <ElementTile z={answer.z} glyph={glyphs} /> : <div className="etile etile-lg etile-empty" aria-hidden="true">?</div>}
+      <div className={`rv-main${answer.tier ? '' : ' bad'}`}>
+        {answer.z != null ? <ElementTile z={answer.z} glyph={glyphs} materialize /> : <div className="etile etile-lg etile-empty" aria-hidden="true">?</div>}
         <div className="rv-result">
           <h2 id="reveal-title" className="sr-only">
             {answer.z != null ? el(answer.z).name : 'Timeout'}

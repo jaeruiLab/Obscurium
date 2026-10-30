@@ -1,6 +1,7 @@
 [
  {
   "id": "sym-not-english",
+  "mode": "daily",
   "category": "SYMBOLS",
   "difficulty": 2,
   "text": "Name an element whose symbol doesn’t come from its English name",
@@ -34,6 +35,7 @@
  },
  {
   "id": "one-letter",
+  "mode": "daily",
   "category": "SYMBOLS",
   "difficulty": 1,
   "text": "Name an element with a one-letter symbol",
@@ -67,6 +69,7 @@
  },
  {
   "id": "state-postal",
+  "mode": "challenge",
   "category": "SYMBOLS",
   "difficulty": 2,
   "text": "Name an element whose symbol is also a US state’s postal code",
@@ -115,6 +118,7 @@
  },
  {
   "id": "symbol-c",
+  "mode": "daily",
   "category": "SYMBOLS",
   "difficulty": 1,
   "text": "Name an element whose symbol starts with C",
@@ -142,6 +146,7 @@
  },
  {
   "id": "symbol-ends-b",
+  "mode": "challenge",
   "category": "SYMBOLS",
   "difficulty": 2,
   "text": "Name an element whose symbol ends in the letter b",
@@ -162,6 +167,7 @@
  },
  {
   "id": "symbol-ends-r",
+  "mode": "challenge",
   "category": "SYMBOLS",
   "difficulty": 2,
   "text": "Name an element with a two-letter symbol ending in r",
@@ -186,6 +192,7 @@
  },
  {
   "id": "liquid-near-rt",
+  "mode": "daily",
   "category": "PHYSICAL",
   "difficulty": 2,
   "text": "Name an element that’s liquid at or just above room temperature (melts below 40 °C)",
@@ -219,6 +226,7 @@
  },
  {
   "id": "gas-stp",
+  "mode": "daily",
   "category": "PHYSICAL",
   "difficulty": 1,
   "text": "Name an element that’s a gas at standard temperature and pressure",
@@ -250,6 +258,7 @@
  },
  {
   "id": "ferromagnetic",
+  "mode": "challenge",
   "category": "PHYSICAL",
   "difficulty": 2,
   "text": "Name an element that’s ferromagnetic at room temperature",
@@ -286,6 +295,7 @@
  },
  {
   "id": "denser-than-lead",
+  "mode": "challenge",
   "category": "PHYSICAL",
   "difficulty": 3,
   "text": "Name an element that’s denser than lead (11.3 g/cm³)",
@@ -336,6 +346,7 @@
  },
  {
   "id": "solid-nonmetal",
+  "mode": "daily",
   "category": "PHYSICAL",
   "difficulty": 2,
   "text": "Name a nonmetal that’s solid at room temperature",
@@ -365,6 +376,7 @@
  },
  {
   "id": "melts-above-3000",
+  "mode": "challenge",
   "category": "PHYSICAL",
   "difficulty": 3,
   "text": "Name an element that melts above 3,000 °C",
@@ -390,6 +402,7 @@
  },
  {
   "id": "noble-gas",
+  "mode": "daily",
   "category": "PERIODIC TABLE",
   "difficulty": 1,
   "text": "Name a noble gas",
@@ -417,6 +430,7 @@
  },
  {
   "id": "alkali",
+  "mode": "daily",
   "category": "PERIODIC TABLE",
   "difficulty": 1,
   "text": "Name an alkali metal",
@@ -444,6 +458,7 @@
  },
  {
   "id": "alkaline-earth",
+  "mode": "daily",
   "category": "PERIODIC TABLE",
   "difficulty": 1,
   "text": "Name an alkaline earth metal",
@@ -465,6 +480,7 @@
  },
  {
   "id": "metalloid",
+  "mode": "daily",
   "category": "PERIODIC TABLE",
   "difficulty": 2,
   "text": "Name a metalloid",
@@ -496,6 +512,7 @@
  },
  {
   "id": "group-11",
+  "mode": "daily",
   "category": "PERIODIC TABLE",
   "difficulty": 2,
   "text": "Name an element in group 11",
@@ -516,6 +533,7 @@
  },
  {
   "id": "lanthanide",
+  "mode": "daily",
   "category": "PERIODIC TABLE",
   "difficulty": 3,
   "text": "Name a lanthanide",
@@ -546,6 +564,7 @@
  },
  {
   "id": "period-2",
+  "mode": "daily",
   "category": "PERIODIC TABLE",
   "difficulty": 1,
   "text": "Name an element in period 2 (the second row) of the periodic table",
@@ -573,6 +592,7 @@
  },
  {
   "id": "period-4-transition",
+  "mode": "daily",
   "category": "PERIODIC TABLE",
   "difficulty": 2,
   "text": "Name a transition metal in period 4 (the fourth row)",
@@ -598,9 +618,10 @@
  },
  {
   "id": "no-stable-isotopes",
-  "category": "NUCLEAR",
+  "mode": "daily",
+  "category": "PHYSICAL",
   "difficulty": 2,
-  "text": "Name an element with no stable isotopes",
+  "text": "Name a radioactive element (one with no stable isotopes)",
   "validZ": [
    43,
    61,
@@ -657,6 +678,7 @@
  },
  {
   "id": "z-over-100",
+  "mode": "challenge",
   "category": "NUCLEAR",
   "difficulty": 2,
   "text": "Name an element with an atomic number above 100",
@@ -691,6 +713,7 @@
  },
  {
   "id": "named-after-lab",
+  "mode": "challenge",
   "category": "NUCLEAR",
   "difficulty": 3,
   "text": "Name an element named after a research lab or the place where one is",
@@ -722,6 +745,7 @@
  },
  {
   "id": "nuclear-scientist",
+  "mode": "challenge",
   "category": "NUCLEAR",
   "difficulty": 2,
   "text": "Name an element named after a nuclear scientist",
@@ -763,7 +787,8 @@
  },
  {
   "id": "actinide",
-  "category": "NUCLEAR",
+  "mode": "daily",
+  "category": "PERIODIC TABLE",
   "difficulty": 2,
   "text": "Name an actinide",
   "validZ": [
@@ -794,6 +819,7 @@
  },
  {
   "id": "antiquity",
+  "mode": "challenge",
   "category": "HISTORY",
   "difficulty": 2,
   "text": "Name an element known since ancient times",
@@ -838,6 +864,7 @@
  },
  {
   "id": "discovered-1700s",
+  "mode": "challenge",
   "category": "HISTORY",
   "difficulty": 2,
   "text": "Name an element discovered in the 1700s",
@@ -873,6 +900,7 @@
  },
  {
   "id": "discovered-1898",
+  "mode": "challenge",
   "category": "HISTORY",
   "difficulty": 3,
   "text": "Name an element discovered in 1898",
@@ -897,6 +925,7 @@
  },
  {
   "id": "ramsay",
+  "mode": "challenge",
   "category": "HISTORY",
   "difficulty": 3,
   "text": "Name an element discovered or co-discovered by William Ramsay",
@@ -929,6 +958,7 @@
  },
  {
   "id": "davy",
+  "mode": "challenge",
   "category": "HISTORY",
   "difficulty": 3,
   "text": "Name an element first isolated by Humphry Davy",
@@ -968,6 +998,7 @@
  },
  {
   "id": "named-person",
+  "mode": "challenge",
   "category": "ETYMOLOGY",
   "difficulty": 2,
   "text": "Name an element named after a person",
@@ -1010,6 +1041,7 @@
  },
  {
   "id": "named-place",
+  "mode": "challenge",
   "category": "ETYMOLOGY",
   "difficulty": 2,
   "text": "Name an element named after a place on Earth",
@@ -1073,6 +1105,7 @@
  },
  {
   "id": "celestial",
+  "mode": "challenge",
   "category": "ETYMOLOGY",
   "difficulty": 2,
   "text": "Name an element named after a celestial body",
@@ -1106,6 +1139,7 @@
  },
  {
   "id": "ends-ine",
+  "mode": "challenge",
   "category": "ETYMOLOGY",
   "difficulty": 1,
   "text": "Name an element whose name ends in “-ine”",
@@ -1128,6 +1162,7 @@
  },
  {
   "id": "myth-figure",
+  "mode": "challenge",
   "category": "ETYMOLOGY",
   "difficulty": 3,
   "text": "Name an element named after a figure from mythology",
@@ -1171,6 +1206,7 @@
  },
  {
   "id": "named-color",
+  "mode": "challenge",
   "category": "ETYMOLOGY",
   "difficulty": 2,
   "text": "Name an element whose name comes from a color",
@@ -1196,6 +1232,7 @@
  },
  {
   "id": "named-woman",
+  "mode": "challenge",
   "category": "ETYMOLOGY",
   "difficulty": 3,
   "text": "Name an element named after a woman, real or mythological",
@@ -1239,6 +1276,1290 @@
   },
   "packs": [
    "etymology"
+  ]
+ },
+ {
+  "id": "transition-metal",
+  "mode": "daily",
+  "category": "PERIODIC TABLE",
+  "difficulty": 1,
+  "text": "Name a transition metal",
+  "validZ": [
+   21,
+   22,
+   23,
+   24,
+   25,
+   26,
+   27,
+   28,
+   29,
+   30,
+   39,
+   40,
+   41,
+   42,
+   43,
+   44,
+   45,
+   46,
+   47,
+   48,
+   72,
+   73,
+   74,
+   75,
+   76,
+   77,
+   78,
+   79,
+   80,
+   104,
+   105,
+   106,
+   107,
+   108,
+   109,
+   110,
+   111,
+   112
+  ],
+  "edge": [
+   {
+    "z": 57,
+    "note": "it’s in the f-block row on most tables, though some put it in group 3"
+   },
+   {
+    "z": 89,
+    "note": "it’s in the f-block row on most tables, though some put it in group 3"
+   },
+   {
+    "z": 71,
+    "note": "it’s in the f-block row on most tables, though IUPAC leans toward group 3"
+   },
+   {
+    "z": 103,
+    "note": "it’s in the f-block row on most tables, though IUPAC leans toward group 3"
+   }
+  ],
+  "moleZ": 45,
+  "moleFact": "Rhodium is rarer than gold — its price has topped $25,000 an ounce.",
+  "reasonTemplate": "{name} is a d-block transition metal in group {group}",
+  "invalidTemplate": "{name} is {aCategory}",
+  "packs": [
+   "ap-chem"
+  ]
+ },
+ {
+  "id": "halogen",
+  "mode": "daily",
+  "category": "PERIODIC TABLE",
+  "difficulty": 1,
+  "text": "Name a halogen",
+  "validZ": [
+   9,
+   17,
+   35,
+   53,
+   85,
+   117
+  ],
+  "moleZ": 85,
+  "moleFact": "Astatine is so rare that less than a gram exists in Earth’s crust at any moment.",
+  "reasonTemplate": "{name} sits in group 17, the halogens",
+  "invalidTemplate": "{name} is {aCategory}",
+  "packs": [
+   "ap-chem"
+  ]
+ },
+ {
+  "id": "nonmetal",
+  "mode": "daily",
+  "category": "PERIODIC TABLE",
+  "difficulty": 1,
+  "text": "Name a nonmetal",
+  "validZ": [
+   1,
+   2,
+   6,
+   7,
+   8,
+   9,
+   10,
+   15,
+   16,
+   17,
+   18,
+   34,
+   35,
+   36,
+   53,
+   54,
+   86
+  ],
+  "edge": [
+   {
+    "z": 85,
+    "note": "it’s a halogen on paper, but its few atoms probably behave like a metal"
+   }
+  ],
+  "moleZ": 15,
+  "moleFact": "White phosphorus glows in the dark as it reacts with air — it gave “phosphorescence” its name.",
+  "reasonTemplate": "{name} is {aCategory}",
+  "invalidTemplate": "{name} is {aCategory}",
+  "packs": [
+   "ap-chem"
+  ]
+ },
+ {
+  "id": "post-transition",
+  "mode": "daily",
+  "category": "PERIODIC TABLE",
+  "difficulty": 2,
+  "text": "Name a post-transition metal (a “poor metal” in the p-block)",
+  "validZ": [
+   13,
+   31,
+   49,
+   50,
+   81,
+   82,
+   83,
+   84
+  ],
+  "edge": [
+   {
+    "z": 30,
+    "note": "some tables count group 12 as post-transition metals"
+   },
+   {
+    "z": 48,
+    "note": "some tables count group 12 as post-transition metals"
+   },
+   {
+    "z": 80,
+    "note": "some tables count group 12 as post-transition metals"
+   }
+  ],
+  "moleZ": 49,
+  "moleFact": "Indium is so soft it “cries” — bend a bar and it squeaks.",
+  "reasonTemplate": "{name} is a post-transition metal",
+  "invalidTemplate": "{name} is {aCategory}",
+  "packs": [
+   "ap-chem"
+  ]
+ },
+ {
+  "id": "period-3",
+  "mode": "daily",
+  "category": "PERIODIC TABLE",
+  "difficulty": 1,
+  "text": "Name an element in period 3 (the third row)",
+  "validZ": [
+   11,
+   12,
+   13,
+   14,
+   15,
+   16,
+   17,
+   18
+  ],
+  "moleZ": 18,
+  "moleFact": "Argon is almost 1% of the air you’re breathing — over 20 times more than carbon dioxide.",
+  "reasonTemplate": "{name} is in period 3",
+  "invalidTemplate": "{name} is in period {period}",
+  "packs": [
+   "ap-chem"
+  ]
+ },
+ {
+  "id": "group-13",
+  "mode": "daily",
+  "category": "PERIODIC TABLE",
+  "difficulty": 2,
+  "text": "Name an element in group 13 (the boron family)",
+  "validZ": [
+   5,
+   13,
+   31,
+   49,
+   81,
+   113
+  ],
+  "moleZ": 81,
+  "moleFact": "Thallium was once sold in rat poison and hair-removal cream.",
+  "reasonTemplate": "{name} is in group 13",
+  "invalidTemplate": "{name} is in group {group}",
+  "packs": [
+   "ap-chem"
+  ]
+ },
+ {
+  "id": "group-14",
+  "mode": "daily",
+  "category": "PERIODIC TABLE",
+  "difficulty": 1,
+  "text": "Name an element in group 14 (the carbon family)",
+  "validZ": [
+   6,
+   14,
+   32,
+   50,
+   82,
+   114
+  ],
+  "moleZ": 114,
+  "moleFact": "Flerovium might be a volatile metal — possibly even a gas at room temperature.",
+  "reasonTemplate": "{name} is in group 14",
+  "invalidTemplate": "{name} is in group {group}",
+  "packs": [
+   "ap-chem"
+  ]
+ },
+ {
+  "id": "group-16",
+  "mode": "daily",
+  "category": "PERIODIC TABLE",
+  "difficulty": 2,
+  "text": "Name an element in group 16 (the oxygen family)",
+  "validZ": [
+   8,
+   16,
+   34,
+   52,
+   84,
+   116
+  ],
+  "moleZ": 84,
+  "moleFact": "A gram of polonium-210 heats itself to about 500 °C and makes the air around it glow blue.",
+  "reasonTemplate": "{name} is in group 16",
+  "invalidTemplate": "{name} is in group {group}",
+  "packs": [
+   "ap-chem"
+  ]
+ },
+ {
+  "id": "en-above-carbon",
+  "mode": "daily",
+  "category": "TRENDS",
+  "difficulty": 2,
+  "text": "Name an element more electronegative than carbon (2.55)",
+  "validZ": [
+   7,
+   8,
+   9,
+   16,
+   17,
+   35,
+   53
+  ],
+  "edge": [
+   {
+    "z": 36,
+    "note": "noble-gas electronegativities are estimates — krypton barely forms bonds"
+   },
+   {
+    "z": 54,
+    "note": "noble-gas electronegativities are estimates — xenon only bonds to the most electronegative atoms"
+   }
+  ],
+  "moleZ": 16,
+  "moleFact": "Sulfur (2.58) beats carbon (2.55) by just 0.03 on the Pauling scale.",
+  "reasonTemplate": "{name} has an electronegativity of {en}",
+  "invalidTemplate": "{name} has an electronegativity of {en}",
+  "packs": [
+   "ap-chem",
+   "trends"
+  ]
+ },
+ {
+  "id": "ie-above-hydrogen",
+  "mode": "daily",
+  "category": "TRENDS",
+  "difficulty": 3,
+  "text": "Name an element with a higher first ionization energy than hydrogen (13.6 eV)",
+  "validZ": [
+   2,
+   7,
+   8,
+   9,
+   10,
+   18,
+   36
+  ],
+  "moleZ": 8,
+  "moleFact": "Oxygen (13.62 eV) beats hydrogen (13.60 eV) by just 0.02 eV.",
+  "reasonTemplate": "{name}’s first ionization energy is {ie} eV",
+  "invalidTemplate": "{name}’s first ionization energy is {ie} eV",
+  "packs": [
+   "ap-chem",
+   "trends"
+  ]
+ },
+ {
+  "id": "ie-below-lithium",
+  "mode": "daily",
+  "category": "TRENDS",
+  "difficulty": 2,
+  "text": "Name an element with a lower first ionization energy than lithium (5.39 eV)",
+  "validZ": [
+   11,
+   19,
+   37,
+   55,
+   56,
+   87,
+   88,
+   89
+  ],
+  "edge": [
+   {
+    "z": 103,
+    "note": "its ionization energy was measured at about 4.96 eV — but only in 2015, on a few atoms"
+   }
+  ],
+  "moleZ": 56,
+  "moleFact": "Barium gives up an electron more easily than lithium: its outer electron sits much farther from the nucleus.",
+  "reasonTemplate": "{name}’s first ionization energy is {ie} eV",
+  "invalidTemplate": "{name}’s first ionization energy is {ie} eV",
+  "packs": [
+   "ap-chem",
+   "trends"
+  ]
+ },
+ {
+  "id": "ie-dip",
+  "mode": "daily",
+  "category": "TRENDS",
+  "difficulty": 3,
+  "text": "Name a main-group element with a lower first ionization energy than the element just before it",
+  "validZ": [
+   3,
+   5,
+   8,
+   11,
+   13,
+   16,
+   19,
+   31,
+   34,
+   37,
+   49,
+   55,
+   81,
+   83,
+   87
+  ],
+  "moleZ": 34,
+  "moleFact": "Selenium dips below arsenic for the same reason oxygen dips below nitrogen: its fourth p electron has to pair up.",
+  "invalidTemplate": "{name}’s first ionization energy ({ie} eV) is higher than the element before it, or it isn’t a main-group element",
+  "reasons": {
+   "3": "Lithium (5.392 eV) is lower than helium (24.587 eV)",
+   "5": "Boron (8.298 eV) is lower than beryllium (9.323 eV)",
+   "8": "Oxygen (13.618 eV) is lower than nitrogen (14.534 eV)",
+   "11": "Sodium (5.139 eV) is lower than neon (21.565 eV)",
+   "13": "Aluminum (5.986 eV) is lower than magnesium (7.646 eV)",
+   "16": "Sulfur (10.36 eV) is lower than phosphorus (10.487 eV)",
+   "19": "Potassium (4.341 eV) is lower than argon (15.76 eV)",
+   "31": "Gallium (5.999 eV) is lower than zinc (9.394 eV)",
+   "34": "Selenium (9.752 eV) is lower than arsenic (9.815 eV)",
+   "37": "Rubidium (4.177 eV) is lower than krypton (14 eV)",
+   "49": "Indium (5.786 eV) is lower than cadmium (8.994 eV)",
+   "55": "Cesium (3.894 eV) is lower than xenon (12.13 eV)",
+   "81": "Thallium (6.108 eV) is lower than mercury (10.438 eV)",
+   "83": "Bismuth (7.289 eV) is lower than lead (7.417 eV)",
+   "87": "Francium (3.9 eV) is lower than radon (10.745 eV)"
+  },
+  "packs": [
+   "ap-chem",
+   "trends"
+  ]
+ },
+ {
+  "id": "melts-above-2000",
+  "mode": "daily",
+  "category": "TRENDS",
+  "difficulty": 2,
+  "text": "Name an element that melts above 2,000 °C",
+  "validZ": [
+   5,
+   41,
+   42,
+   43,
+   44,
+   72,
+   73,
+   74,
+   75,
+   76,
+   77
+  ],
+  "edge": [
+   {
+    "z": 6,
+    "note": "it sublimes at about 3,640 °C at normal pressure — it never actually melts"
+   }
+  ],
+  "overrides": {
+   "5": "vein"
+  },
+  "moleZ": 72,
+  "moleFact": "Hafnium carbide melts at around 3,900 °C — one of the most heat-resistant substances known.",
+  "reasonTemplate": "{name} melts at {meltC} °C",
+  "invalidTemplate": "{name} melts at {meltC} °C",
+  "packs": [
+   "trends"
+  ]
+ },
+ {
+  "id": "metal-melts-below-100",
+  "mode": "daily",
+  "category": "TRENDS",
+  "difficulty": 2,
+  "text": "Name a metal that melts below 100 °C",
+  "validZ": [
+   11,
+   19,
+   31,
+   37,
+   55,
+   80
+  ],
+  "edge": [
+   {
+    "z": 87,
+    "note": "it’s predicted to melt near 27 °C, but no one has ever seen a visible piece"
+   }
+  ],
+  "overrides": {
+   "19": "vein",
+   "31": "ore",
+   "80": "bedrock"
+  },
+  "moleZ": 11,
+  "moleFact": "Sodium melts at 97.8 °C — just below the boiling point of water.",
+  "reasonTemplate": "{name} melts at {meltC} °C",
+  "invalidTemplate": "{name} melts at {meltC} °C",
+  "packs": [
+   "trends",
+   "lab-bench"
+  ]
+ },
+ {
+  "id": "denser-than-iron",
+  "mode": "daily",
+  "category": "TRENDS",
+  "difficulty": 1,
+  "text": "Name an element denser than iron (7.87 g/cm³)",
+  "validZ": [
+   27,
+   28,
+   29,
+   41,
+   42,
+   43,
+   44,
+   45,
+   46,
+   47,
+   48,
+   64,
+   65,
+   66,
+   67,
+   68,
+   69,
+   71,
+   72,
+   73,
+   74,
+   75,
+   76,
+   77,
+   78,
+   79,
+   80,
+   81,
+   82,
+   83,
+   84,
+   89,
+   90,
+   91,
+   92,
+   93,
+   94,
+   95,
+   96,
+   97,
+   98,
+   99
+  ],
+  "moleZ": 78,
+  "moleFact": "Platinum is 21.5 g/cm³ — a platinum golf ball would weigh almost a kilogram.",
+  "reasonTemplate": "{name}: {density} g/cm³",
+  "invalidTemplate": "{name}: {density} g/cm³",
+  "packs": [
+   "trends"
+  ]
+ },
+ {
+  "id": "not-solid",
+  "mode": "daily",
+  "category": "PHYSICAL",
+  "difficulty": 1,
+  "text": "Name an element that isn’t a solid at room temperature",
+  "validZ": [
+   1,
+   2,
+   7,
+   8,
+   9,
+   10,
+   17,
+   18,
+   35,
+   36,
+   54,
+   80,
+   86
+  ],
+  "edge": [
+   {
+    "z": 55,
+    "note": "it melts at 28.5 °C — liquid on a hot day, solid in a cool room"
+   },
+   {
+    "z": 31,
+    "note": "it melts at 29.8 °C — liquid on a hot day, solid in a cool room"
+   },
+   {
+    "z": 87,
+    "note": "it’s predicted to be a liquid, but no one has ever seen a visible piece"
+   },
+   {
+    "z": 112,
+    "note": "it’s predicted to be a liquid, but only single atoms have ever existed"
+   }
+  ],
+  "moleZ": 35,
+  "moleFact": "Bromine is the only nonmetal that’s a liquid at room temperature.",
+  "reasonTemplate": "{name} is a {phase} at room temperature",
+  "invalidTemplate": "{name} is a {phase} at room temperature",
+  "packs": [
+   "lab-bench"
+  ]
+ },
+ {
+  "id": "lighter-than-air",
+  "mode": "daily",
+  "category": "PHYSICAL",
+  "difficulty": 2,
+  "text": "Name an element whose gas is lighter than air",
+  "validZ": [
+   1,
+   2,
+   7,
+   10
+  ],
+  "overrides": {
+   "10": "ore"
+  },
+  "moleZ": 7,
+  "moleFact": "N₂ (28 g/mol) is only a little lighter than air (29 g/mol) — air is mostly nitrogen, after all.",
+  "invalidTemplate": "{name} is a {phase} at room temperature",
+  "reasons": {
+   "1": "H₂ is 2 g/mol; air averages 29 g/mol",
+   "2": "Helium is 4 g/mol; air averages 29 g/mol",
+   "7": "N₂ is 28 g/mol, just under air’s 29 g/mol",
+   "10": "Neon is 20 g/mol; air averages 29 g/mol"
+  },
+  "invalidReasons": {
+   "8": "O₂ is 32 g/mol — heavier than air (29 g/mol)",
+   "9": "F₂ is 38 g/mol — heavier than air (29 g/mol)",
+   "17": "Cl₂ is 71 g/mol — it sinks, which made it a deadly WWI weapon",
+   "18": "Argon is 40 g/mol — heavier than air (29 g/mol)",
+   "36": "Krypton is 84 g/mol — heavier than air (29 g/mol)",
+   "54": "Xenon is 131 g/mol — heavy enough to deepen your voice",
+   "86": "Radon is 222 g/mol — it pools in basements"
+  },
+  "packs": [
+   "lab-bench"
+  ]
+ },
+ {
+  "id": "diatomic",
+  "mode": "daily",
+  "category": "CHEMICAL",
+  "difficulty": 1,
+  "text": "Name an element that naturally exists as a diatomic molecule (X₂)",
+  "validZ": [
+   1,
+   7,
+   8,
+   9,
+   17,
+   35,
+   53
+  ],
+  "edge": [
+   {
+    "z": 85,
+    "note": "astatine should form At₂ like the other halogens, but there’s never been enough to check"
+   }
+  ],
+  "moleZ": 35,
+  "moleFact": "Bromine is the only diatomic element that’s a liquid at room temperature.",
+  "reasonTemplate": "{name} exists as {symbol}₂",
+  "invalidTemplate": "{name} doesn’t exist as {symbol}₂ molecules",
+  "packs": [
+   "ap-chem",
+   "lab-bench"
+  ]
+ },
+ {
+  "id": "ion-minus-2",
+  "mode": "daily",
+  "category": "CHEMICAL",
+  "difficulty": 2,
+  "text": "Name an element that commonly forms a 2− ion",
+  "validZ": [
+   8,
+   16,
+   34,
+   52
+  ],
+  "edge": [
+   {
+    "z": 84,
+    "note": "polonide ions (Po²⁻) exist, but polonium mostly behaves like a metal"
+   }
+  ],
+  "moleZ": 52,
+  "moleFact": "Gold tellurides are some of the few minerals where gold isn’t found as the pure metal.",
+  "reasonTemplate": "{name} gains two electrons to form {symbol}²⁻",
+  "invalidTemplate": "{name} doesn’t typically form a 2− ion",
+  "packs": [
+   "ap-chem"
+  ]
+ },
+ {
+  "id": "ion-minus-1",
+  "mode": "daily",
+  "category": "CHEMICAL",
+  "difficulty": 1,
+  "text": "Name an element that commonly forms a 1− ion",
+  "validZ": [
+   9,
+   17,
+   35,
+   53
+  ],
+  "edge": [
+   {
+    "z": 1,
+    "note": "it forms the hydride ion H⁻ with very reactive metals, but more often H⁺"
+   },
+   {
+    "z": 85,
+    "note": "it should form astatide (At⁻), but there’s barely any astatine to study"
+   }
+  ],
+  "moleZ": 53,
+  "moleFact": "Iodide is added to table salt because your thyroid needs it to make hormones.",
+  "reasonTemplate": "{name} gains one electron to form {symbol}⁻",
+  "invalidTemplate": "{name} doesn’t typically form a 1− ion",
+  "packs": [
+   "ap-chem"
+  ]
+ },
+ {
+  "id": "water-reactive",
+  "mode": "daily",
+  "category": "CHEMICAL",
+  "difficulty": 2,
+  "text": "Name a metal that reacts with cold water",
+  "validZ": [
+   3,
+   11,
+   19,
+   20,
+   37,
+   38,
+   55,
+   56,
+   63,
+   87,
+   88
+  ],
+  "edge": [
+   {
+    "z": 12,
+    "note": "it only reacts noticeably with hot water or steam"
+   }
+  ],
+  "moleZ": 63,
+  "moleFact": "Europium is the most reactive lanthanide — it fizzes in cold water like calcium.",
+  "reasonTemplate": "{name} reacts with water to release hydrogen gas",
+  "invalidTemplate": "{name} doesn’t react with cold water",
+  "packs": [
+   "ap-chem",
+   "lab-bench"
+  ]
+ },
+ {
+  "id": "below-hydrogen",
+  "mode": "daily",
+  "category": "CHEMICAL",
+  "difficulty": 2,
+  "text": "Name a metal that won’t react with dilute acid (it’s below hydrogen in the activity series)",
+  "validZ": [
+   29,
+   44,
+   45,
+   46,
+   47,
+   76,
+   77,
+   78,
+   79,
+   80
+  ],
+  "edge": [
+   {
+    "z": 83,
+    "note": "it sits right around hydrogen in the activity series, so it barely reacts"
+   },
+   {
+    "z": 51,
+    "note": "it sits right around hydrogen in the activity series, so it barely reacts"
+   }
+  ],
+  "moleZ": 77,
+  "moleFact": "Iridium is the most corrosion-resistant metal — even hot aqua regia barely touches it.",
+  "reasonTemplate": "{name} is less reactive than hydrogen, so dilute acid can’t oxidize it",
+  "invalidTemplate": "{name} isn’t a metal below hydrogen in the activity series",
+  "packs": [
+   "ap-chem",
+   "lab-bench"
+  ]
+ },
+ {
+  "id": "flame-test",
+  "mode": "daily",
+  "category": "CHEMICAL",
+  "difficulty": 2,
+  "text": "Name an element that gives a flame-test color",
+  "validZ": [
+   3,
+   5,
+   11,
+   19,
+   20,
+   29,
+   37,
+   38,
+   55,
+   56
+  ],
+  "edge": [
+   {
+    "z": 49,
+    "note": "it does color a flame indigo-violet, but it isn’t a standard lab flame test"
+   },
+   {
+    "z": 81,
+    "note": "it colors a flame bright green, but it’s far too toxic for a lab flame test"
+   }
+  ],
+  "moleZ": 5,
+  "moleFact": "Boron compounds burn a vivid green — boric acid in methanol is a classic lab demo.",
+  "invalidTemplate": "{name} doesn’t give a characteristic flame-test color",
+  "reasons": {
+   "3": "Lithium burns crimson",
+   "5": "Boron burns bright green",
+   "11": "Sodium burns bright yellow-orange",
+   "19": "Potassium burns lilac",
+   "20": "Calcium burns orange-red",
+   "29": "Copper burns blue-green",
+   "37": "Rubidium burns red-violet",
+   "38": "Strontium burns deep red",
+   "55": "Cesium burns blue-violet",
+   "56": "Barium burns pale green"
+  },
+  "packs": [
+   "lab-bench"
+  ]
+ },
+ {
+  "id": "essential",
+  "mode": "daily",
+  "category": "CHEMICAL",
+  "difficulty": 2,
+  "text": "Name an element your body needs to survive",
+  "validZ": [
+   1,
+   6,
+   7,
+   8,
+   11,
+   12,
+   15,
+   16,
+   17,
+   19,
+   20,
+   25,
+   26,
+   27,
+   29,
+   30,
+   34,
+   42,
+   53
+  ],
+  "edge": [
+   {
+    "z": 9,
+    "note": "it strengthens tooth enamel, but you can live without it"
+   },
+   {
+    "z": 24,
+    "note": "it was long thought essential, but the evidence is now shaky"
+   },
+   {
+    "z": 5,
+    "note": "it may help bones and joints, but it hasn’t been proven essential"
+   },
+   {
+    "z": 14,
+    "note": "it may help bones and connective tissue, but it hasn’t been proven essential"
+   },
+   {
+    "z": 28,
+    "note": "some organisms need it, but it hasn’t been proven essential for humans"
+   },
+   {
+    "z": 23,
+    "note": "some organisms need it, but it hasn’t been proven essential for humans"
+   }
+  ],
+  "moleZ": 42,
+  "moleFact": "Molybdenum sits in enzymes that break down sulfites and purines in your body.",
+  "reasonTemplate": "{name} is an essential element for the human body",
+  "invalidTemplate": "{name} isn’t an essential element for the human body",
+  "packs": [
+   "lab-bench"
+  ]
+ },
+ {
+  "id": "one-valence",
+  "mode": "daily",
+  "category": "ELECTRONS",
+  "difficulty": 1,
+  "text": "Name an element with exactly one valence electron",
+  "validZ": [
+   1,
+   3,
+   11,
+   19,
+   37,
+   55,
+   87
+  ],
+  "edge": [
+   {
+    "z": 29,
+    "note": "its configuration ends in 4s¹, but d-block valence electrons are a matter of definition"
+   },
+   {
+    "z": 47,
+    "note": "its configuration ends in 5s¹, but d-block valence electrons are a matter of definition"
+   },
+   {
+    "z": 79,
+    "note": "its configuration ends in 6s¹, but d-block valence electrons are a matter of definition"
+   }
+  ],
+  "moleZ": 55,
+  "moleFact": "Cesium’s single outer electron is held so loosely that light can knock it off — that’s how old photocells worked.",
+  "reasonTemplate": "{name} has one electron in its outer shell",
+  "invalidTemplate": "{name} doesn’t have exactly one valence electron",
+  "packs": [
+   "ap-chem"
+  ]
+ },
+ {
+  "id": "two-valence",
+  "mode": "daily",
+  "category": "ELECTRONS",
+  "difficulty": 2,
+  "text": "Name an element with exactly two valence electrons",
+  "validZ": [
+   2,
+   4,
+   12,
+   20,
+   38,
+   56,
+   88
+  ],
+  "edge": [
+   {
+    "z": 30,
+    "note": "it has two outer s electrons, but whether its full d shell counts is a matter of definition"
+   },
+   {
+    "z": 48,
+    "note": "it has two outer s electrons, but whether its full d shell counts is a matter of definition"
+   },
+   {
+    "z": 80,
+    "note": "it has two outer s electrons, but whether its full d shell counts is a matter of definition"
+   }
+  ],
+  "moleZ": 2,
+  "moleFact": "Helium has two valence electrons, yet it sits with the noble gases, not group 2 — its shell is already full.",
+  "reasonTemplate": "{name} has two electrons in its outer shell",
+  "invalidTemplate": "{name} doesn’t have exactly two valence electrons",
+  "packs": [
+   "ap-chem"
+  ]
+ },
+ {
+  "id": "half-filled-p",
+  "mode": "daily",
+  "category": "ELECTRONS",
+  "difficulty": 3,
+  "text": "Name an element with a half-filled p subshell (p³)",
+  "validZ": [
+   7,
+   15,
+   33,
+   51,
+   83
+  ],
+  "edge": [
+   {
+    "z": 115,
+    "note": "it should be 7p³, but that’s a prediction — only a few atoms have been made"
+   }
+  ],
+  "moleZ": 33,
+  "moleFact": "Arsenic sits right under phosphorus, so it can sneak into phosphate’s place in your cells — that’s what makes it poisonous.",
+  "reasonTemplate": "{name} ends in p³: {config}",
+  "invalidTemplate": "{name}: {config}",
+  "packs": [
+   "ap-chem"
+  ]
+ },
+ {
+  "id": "aufbau-exception",
+  "mode": "daily",
+  "category": "ELECTRONS",
+  "difficulty": 3,
+  "text": "Name an element whose electron configuration breaks the Aufbau order",
+  "validZ": [
+   24,
+   29,
+   41,
+   42,
+   44,
+   45,
+   46,
+   47,
+   57,
+   58,
+   64,
+   78,
+   79,
+   89,
+   90,
+   91,
+   92,
+   93,
+   96
+  ],
+  "edge": [
+   {
+    "z": 103,
+    "note": "measurements suggest its outer electron sits in 7p, not 6d — but that’s from a handful of atoms"
+   }
+  ],
+  "overrides": {
+   "24": "bedrock",
+   "29": "bedrock",
+   "47": "ore",
+   "79": "ore",
+   "92": "trace"
+  },
+  "moleZ": 46,
+  "moleFact": "Palladium is the only element with no electron in its outermost s orbital: [Kr]4d¹⁰.",
+  "reasonTemplate": "{name} is {config}, not the Aufbau prediction",
+  "invalidTemplate": "{name} follows the Aufbau order: {config}",
+  "packs": [
+   "ap-chem"
+  ]
+ },
+ {
+  "id": "s-block",
+  "mode": "daily",
+  "category": "ELECTRONS",
+  "difficulty": 1,
+  "text": "Name an element in the s-block",
+  "validZ": [
+   1,
+   2,
+   3,
+   4,
+   11,
+   12,
+   19,
+   20,
+   37,
+   38,
+   55,
+   56,
+   87,
+   88
+  ],
+  "overrides": {
+   "2": "vein"
+  },
+  "moleZ": 88,
+  "moleFact": "Radium glows faintly on its own — it was once sold in “energizing” toothpaste.",
+  "reasonTemplate": "{name}’s outermost electrons are in an s orbital: {config}",
+  "invalidTemplate": "{name} is in the {block}-block",
+  "packs": [
+   "ap-chem"
+  ]
+ },
+ {
+  "id": "p-block",
+  "mode": "daily",
+  "category": "ELECTRONS",
+  "difficulty": 1,
+  "text": "Name an element in the p-block",
+  "validZ": [
+   5,
+   6,
+   7,
+   8,
+   9,
+   10,
+   13,
+   14,
+   15,
+   16,
+   17,
+   18,
+   31,
+   32,
+   33,
+   34,
+   35,
+   36,
+   49,
+   50,
+   51,
+   52,
+   53,
+   54,
+   81,
+   82,
+   83,
+   84,
+   85,
+   86,
+   113,
+   114,
+   115,
+   116,
+   117,
+   118
+  ],
+  "moleZ": 113,
+  "moleFact": "Nihonium was the first element discovered in Asia, by Japan’s RIKEN lab.",
+  "reasonTemplate": "{name} is filling a p subshell",
+  "invalidTemplate": "{name} is in the {block}-block",
+  "packs": [
+   "ap-chem"
+  ]
+ },
+ {
+  "id": "symbol-s",
+  "mode": "daily",
+  "category": "SYMBOLS",
+  "difficulty": 1,
+  "text": "Name an element whose symbol starts with S",
+  "validZ": [
+   14,
+   16,
+   21,
+   34,
+   38,
+   50,
+   51,
+   62,
+   106
+  ],
+  "overrides": {
+   "50": "vein"
+  },
+  "moleZ": 106,
+  "moleFact": "Seaborgium was named while Glenn Seaborg was still alive — he joked he could get mail addressed in elements.",
+  "reasonTemplate": "{name}’s symbol is {symbol}",
+  "invalidTemplate": "{name}’s symbol is {symbol}",
+  "packs": []
+ },
+ {
+  "id": "short-name",
+  "mode": "daily",
+  "category": "SYMBOLS",
+  "difficulty": 2,
+  "text": "Name an element whose English name has four letters or fewer",
+  "validZ": [
+   10,
+   26,
+   30,
+   50,
+   79,
+   82
+  ],
+  "moleZ": 50,
+  "moleFact": "Tin has the shortest name of any element — and the most stable isotopes, ten.",
+  "reasonTemplate": "“{name}” is short enough",
+  "invalidTemplate": "“{name}” is too long",
+  "packs": []
+ },
+ {
+  "id": "ends-ium",
+  "mode": "daily",
+  "category": "SYMBOLS",
+  "difficulty": 1,
+  "text": "Name an element whose name ends in “-ium”",
+  "validZ": [
+   2,
+   3,
+   4,
+   11,
+   12,
+   19,
+   20,
+   21,
+   22,
+   23,
+   24,
+   31,
+   32,
+   34,
+   37,
+   38,
+   39,
+   40,
+   41,
+   43,
+   44,
+   45,
+   46,
+   48,
+   49,
+   52,
+   55,
+   56,
+   58,
+   59,
+   60,
+   61,
+   62,
+   63,
+   64,
+   65,
+   66,
+   67,
+   68,
+   69,
+   70,
+   71,
+   72,
+   75,
+   76,
+   77,
+   81,
+   84,
+   87,
+   88,
+   89,
+   90,
+   91,
+   92,
+   93,
+   94,
+   95,
+   96,
+   97,
+   98,
+   99,
+   100,
+   101,
+   102,
+   103,
+   104,
+   105,
+   106,
+   107,
+   108,
+   109,
+   110,
+   111,
+   112,
+   113,
+   114,
+   115,
+   116
+  ],
+  "moleZ": 108,
+  "moleFact": "Hassium is predicted to be the densest element of all — nearly twice as dense as osmium.",
+  "reasonTemplate": "{name} ends in “-ium”",
+  "invalidTemplate": "{name} doesn’t end in “-ium”",
+  "packs": []
+ },
+ {
+  "id": "mass-inversion",
+  "mode": "challenge",
+  "category": "PHYSICAL",
+  "difficulty": 3,
+  "text": "Name an element with a smaller atomic mass than the element just before it",
+  "validZ": [
+   19,
+   28,
+   53,
+   91,
+   93
+  ],
+  "edge": [
+   {
+    "z": 95,
+    "note": "its mass is just its longest-lived isotope’s, so the comparison is a technicality"
+   },
+   {
+    "z": 97,
+    "note": "its mass is just its longest-lived isotope’s — and it beats curium by 0.00004 u"
+   }
+  ],
+  "moleZ": 53,
+  "moleFact": "Mendeleev put iodine after tellurium despite its lower mass — he trusted the chemistry over the arithmetic.",
+  "invalidTemplate": "{name} is heavier than the element before it",
+  "reasons": {
+   "19": "Potassium (39.10 u) is lighter than argon (39.90 u)",
+   "28": "Nickel (58.69 u) is lighter than cobalt (58.93 u)",
+   "53": "Iodine (126.90 u) is lighter than tellurium (127.60 u)",
+   "91": "Protactinium (231.04 u) is lighter than thorium (232.04 u)",
+   "93": "Neptunium (237.05 u) is lighter than uranium (238.03 u)"
+  },
+  "packs": [
+   "trends"
   ]
  }
 ]

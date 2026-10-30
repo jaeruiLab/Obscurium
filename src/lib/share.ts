@@ -6,13 +6,17 @@ export type ShareInput = {
   /** daily dig number, or null for a themed pack run */
   digNumber: number | null;
   packLabel?: string;
+  challenge?: boolean;
   answers: Answer[];
   points: number;
 };
 
 /** Spoiler-free result: tier squares only, never element names or symbols. */
-export function shareText({ digNumber, packLabel, answers, points }: ShareInput): string {
-  const title = digNumber != null ? `OBSCURIUM ${formatDigNumber(digNumber)}` : `OBSCURIUM · ${packLabel ?? 'PACK'}`;
+export function shareText({ digNumber, packLabel, challenge, answers, points }: ShareInput): string {
+  const title =
+    digNumber == null
+      ? `OBSCURIUM · ${packLabel ?? 'PACK'}`
+      : `OBSCURIUM${challenge ? ' CHALLENGE' : ''} ${formatDigNumber(digNumber)}`;
   const depth = (points * METERS_PER_POINT).toLocaleString('en-US');
   const head = `${title} ⛏ ${points} pts · -${depth} m`;
   const squares = answers.map((a) => (a.tier ? TIER_EMOJI[a.tier] : MISS_EMOJI)).join('');

@@ -17,6 +17,9 @@ export function HowToPlay() {
         <li>
           After each answer, the periodic table lights up every element that would have counted.
         </li>
+        <li>
+          Want it harder? <b>Challenge</b> is a second daily set of niche prompts: etymology, history and nuclear trivia. It doesn’t touch your streak.
+        </li>
       </ol>
       <ul className="howto-tiers">
         {TIER_ORDER.map((t) => (

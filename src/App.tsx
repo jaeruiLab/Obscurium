@@ -5,20 +5,21 @@ import { Icon } from './components/Icons';
 import { About, HowToPlay, Privacy, Skins } from './components/InfoPanels';
 import { Menu, type MenuItem } from './components/Menu';
 import { Modal } from './components/Modal';
+import { usePixelWipe } from './components/PixelWipe';
 import { PromptCard } from './components/PromptCard';
 import { Results } from './components/Results';
 import { Reveal } from './components/Reveal';
 import { SettingsPanel } from './components/SettingsPanel';
 import { StatsSummary } from './components/StatsPanel';
 import { TitleScreen } from './components/TitleScreen';
-import { digNumber, promptsForDate, SECONDS_PER_PROMPT } from './lib/daily';
+import { digNumber, PROMPT_BY_ID, SECONDS_PER_PROMPT } from './lib/daily';
 import { el } from './lib/elements';
 import { TIER_LABEL } from './lib/scoring';
 import { liveStreak, type DigRecord } from './lib/storage';
 import { SceneCanvas } from './scene/SceneCanvas';
 import { depthFor, totalPoints } from './state/gameReducer';
 import { useSave } from './state/save';
-import { useGame } from './state/useGame';
+import { useGame, type TrackedKind } from './state/useGame';
 import { useDeadline } from './state/useTimer';
 
 type ModalId = 'how' | 'stats' | 'settings' | 'about' | 'privacy' | 'skins';
@@ -36,12 +37,13 @@ const introMsFor = (index: number) => (index === 0 ? 3000 : 2000);
 export function App() {
   const { save, setSetting, reducedMotion } = useSave();
   const game = useGame();
+  const wipe = usePixelWipe();
   const { state } = game;
   const run = state.screen === 'run' ? state : null;
 
   const [modal, setModal] = useState<ModalId | null>(null);
   const [menuOpen, setMenuOpen] = useState(false);
-  const [viewing, setViewing] = useState<DigRecord | null>(null);
+  const [viewing, setViewing] = useState<{ record: DigRecord; kind: TrackedKind } | null>(null);
   const [shakeKey, setShakeKey] = useState(0);
   const [announce, setAnnounce] = useState('');
 
@@ -120,13 +122,15 @@ export function App() {
 
   const pickMenu = (item: MenuItem) => {
     setMenuOpen(false);
-    if (item === 'surface') game.quit();
+    if (item === 'surface') wipe(game.quit);
     else setModal(item);
   };
 
   const todayRecord = save.history[game.todayKey];
-  const viewingPrompts = viewing ? promptsForDate(viewing.dateKey) : [];
-  const sceneDepth = run ? depthFor(run.answers) : viewing ? viewing.points * 10 : 0;
+  const todayChallenge = save.challengeHistory[game.todayKey];
+  // rebuild from the record's own prompt ids, so old digs survive prompt-bank changes
+  const viewingPrompts = viewing ? viewing.record.answers.map((a) => PROMPT_BY_ID.get(a.promptId)).filter((p) => p != null) : [];
+  const sceneDepth = run ? depthFor(run.answers) : viewing ? viewing.record.points * 10 : 0;
 
   return (
     <>
@@ -156,22 +160,27 @@ export function App() {
           streak={liveStreak(save.streak, game.todayKey)}
           doneToday={!!todayRecord}
           resumable={save.inProgress?.dateKey === game.todayKey}
-          onBegin={() => {
-            sfx.submit();
-            game.startDaily();
-          }}
-          onViewToday={() => setViewing(todayRecord ?? null)}
-          onEvent={() => {
-            sfx.submit();
-            game.startPack('halloween');
-          }}
+          challengeDone={!!todayChallenge}
+          challengeResumable={save.challengeInProgress?.dateKey === game.todayKey}
+          onBegin={() => wipe(game.startDaily)}
+          onViewToday={() => todayRecord && wipe(() => setViewing({ record: todayRecord, kind: 'daily' }))}
+          onChallenge={() => wipe(game.startChallenge)}
+          onViewChallenge={() => todayChallenge && wipe(() => setViewing({ record: todayChallenge, kind: 'challenge' }))}
+          onEvent={() => wipe(() => game.startPack('halloween'))}
           onPrivacy={() => setModal('privacy')}
         />
       )}
 
       {viewing && (
         <main className="run-screen results-screen">
-          <Results prompts={viewingPrompts} answers={viewing.answers} digNumber={viewing.digNumber} showStats onClose={() => setViewing(null)} />
+          <Results
+            prompts={viewingPrompts}
+            answers={viewing.record.answers}
+            digNumber={viewing.record.digNumber}
+            challenge={viewing.kind === 'challenge'}
+            showStats={viewing.kind === 'daily'}
+            onClose={() => wipe(() => setViewing(null))}
+          />
         </main>
       )}
 
@@ -180,6 +189,7 @@ export function App() {
           {run.phase !== 'results' && <Hud answers={run.answers} total={run.run.prompts.length} current={run.index} points={totalPoints(run.answers)} />}
           {(run.phase === 'intro' || run.phase === 'prompt') && (
             <PromptCard
+              key={run.index}
               prompt={run.run.prompts[run.index]}
               index={run.index}
               total={run.run.prompts.length}
@@ -205,7 +215,9 @@ export function App() {
               glyphs={settings.colorblind}
               onNext={() => {
                 sfx.click();
-                game.next();
+                // the last reveal hands off to the results page behind a full wipe
+                if (run.index >= run.run.prompts.length - 1) wipe(game.next);
+                else game.next();
               }}
             />
           )}
@@ -215,8 +227,9 @@ export function App() {
               answers={run.answers}
               digNumber={run.run.digNumber}
               packLabel={run.run.packLabel}
+              challenge={run.run.kind === 'challenge'}
               showStats={run.run.kind === 'daily'}
-              onClose={game.quit}
+              onClose={() => wipe(game.quit)}
             />
           )}
         </main>

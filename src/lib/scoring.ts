@@ -46,6 +46,18 @@ export function tierFromShare(share: number): Tier {
   return 'rare';
 }
 
+/** Tier from popularity relative to the prompt's most familiar valid answer (1 = the favorite). */
+export function tierFromRelative(rel: number): Tier {
+  if (rel >= 0.5) return 'bedrock';
+  if (rel >= 0.25) return 'ore';
+  if (rel >= 0.1) return 'vein';
+  if (rel >= 0.03) return 'trace';
+  return 'rare';
+}
+
+const RARITY: Tier[] = ['bedrock', 'ore', 'vein', 'trace', 'rare'];
+const moreCommon = (a: Tier, b: Tier) => (RARITY.indexOf(a) <= RARITY.indexOf(b) ? a : b);
+
 /** Predicted pick share for each valid element (edge elements excluded). */
 export function predictedShares(prompt: Prompt): Map<number, number> {
   const weights = prompt.validZ.map((z) => [z, familiarity(z) ** FAMILIARITY_K] as const);
@@ -60,11 +72,14 @@ export function tierTable(prompt: Prompt): Map<number, Tier> {
   const cached = tableCache.get(prompt.id);
   if (cached) return cached;
   const shares = predictedShares(prompt);
+  // Broad prompts spread the predicted share so thin that even the obvious answers look rare,
+  // so an answer is never rated rarer than its popularity relative to the favorite suggests.
+  const top = Math.max(...shares.values());
   const table = new Map<number, Tier>();
   for (const z of prompt.validZ) {
     if (z === prompt.moleZ) table.set(z, 'mole');
     else if (prompt.overrides?.[z]) table.set(z, prompt.overrides[z]);
-    else table.set(z, tierFromShare(shares.get(z)!));
+    else table.set(z, moreCommon(tierFromShare(shares.get(z)!), tierFromRelative(shares.get(z)! / top)));
   }
   for (const { z } of prompt.edge ?? []) table.set(z, 'technical');
   tableCache.set(prompt.id, table);

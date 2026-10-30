@@ -1,13 +1,15 @@
 import { describe, expect, it } from 'vitest';
 import {
   addDays,
+  challengeForDate,
+  CHALLENGE_PROMPTS,
   cooldownDays,
+  DAILY_PROMPTS,
   dateKeyFor,
   digNumber,
   LAUNCH_DATE,
   msUntilNextDig,
   packPrompts,
-  PROMPTS,
   promptsForDate,
 } from './daily';
 
@@ -56,8 +58,14 @@ describe('daily prompt selection', () => {
     expect(promptsForDate('2026-11-05').map((p) => p.id)).not.toEqual(promptsForDate('2026-11-06').map((p) => p.id));
   });
 
+  it('only uses the broad daily prompts', () => {
+    for (let d = 0; d < 30; d++) {
+      for (const p of promptsForDate(addDays(LAUNCH_DATE, d))) expect(p.mode).toBe('daily');
+    }
+  });
+
   it('covers every category each day', () => {
-    const categories = new Set(PROMPTS.map((p) => p.category));
+    const categories = new Set(DAILY_PROMPTS.map((p) => p.category));
     for (let d = 0; d < 30; d++) {
       const day = promptsForDate(addDays(LAUNCH_DATE, d));
       expect(new Set(day.map((p) => p.category))).toEqual(categories);
@@ -71,20 +79,42 @@ describe('daily prompt selection', () => {
     }
   });
 
-  it('does not repeat a prompt inside the cooldown window', () => {
-    const cooldown = cooldownDays(PROMPTS.length);
+  it.each([
+    ['daily', DAILY_PROMPTS, promptsForDate],
+    ['challenge', CHALLENGE_PROMPTS, challengeForDate],
+  ] as const)('does not repeat a %s prompt inside the cooldown window', (_, pool, forDate) => {
+    const cooldown = cooldownDays(pool);
     expect(cooldown).toBeGreaterThan(0);
     for (let d = cooldown; d < 120; d++) {
-      const today = new Set(promptsForDate(addDays(LAUNCH_DATE, d)).map((p) => p.id));
+      const today = new Set(forDate(addDays(LAUNCH_DATE, d)).map((p) => p.id));
       for (let r = d - cooldown; r < d; r++) {
-        for (const p of promptsForDate(addDays(LAUNCH_DATE, r))) expect(today.has(p.id)).toBe(false);
+        for (const p of forDate(addDays(LAUNCH_DATE, r))) expect(today.has(p.id)).toBe(false);
       }
     }
   });
 
-  it('caps the cooldown at 60 days for big pools', () => {
-    expect(cooldownDays(1000)).toBe(60);
-    expect(cooldownDays(37)).toBe(4);
+  it('sizes the cooldown by the pool and its smallest category, capped at 60 days', () => {
+    const big = Array.from({ length: 1000 }, (_, i) => ({ ...DAILY_PROMPTS[0], id: String(i), category: i % 2 ? 'TRENDS' : 'SYMBOLS' }) as const);
+    expect(cooldownDays(big)).toBe(60);
+    const lopsided = big.slice(0, 40).map((p, i) => ({ ...p, category: i < 3 ? 'TRENDS' : 'SYMBOLS' }) as const);
+    expect(cooldownDays(lopsided)).toBe(2);
+  });
+});
+
+describe('Challenge mode', () => {
+  it('gives everyone the same 7 niche prompts each day', () => {
+    const a = challengeForDate('2026-11-05').map((p) => p.id);
+    expect(a).toEqual(challengeForDate('2026-11-05').map((p) => p.id));
+    expect(a).toHaveLength(7);
+    for (const id of a) expect(CHALLENGE_PROMPTS.some((p) => p.id === id)).toBe(true);
+  });
+
+  it('never overlaps the daily dig', () => {
+    for (let d = 0; d < 30; d++) {
+      const key = addDays(LAUNCH_DATE, d);
+      const daily = new Set(promptsForDate(key).map((p) => p.id));
+      for (const p of challengeForDate(key)) expect(daily.has(p.id)).toBe(false);
+    }
   });
 });
 

@@ -1,33 +1,52 @@
 import { useCallback, useEffect, useReducer, useRef } from 'react';
-import { dateKeyFor, digNumber, packPrompts, promptsForDate } from '../lib/daily';
-import { nextStreak, type DigRecord, type SaveData } from '../lib/storage';
+import { challengeForDate, dateKeyFor, digNumber, packPrompts, promptsForDate } from '../lib/daily';
+import { nextStreak, type DigRecord, type InProgress, type SaveData } from '../lib/storage';
 import { useSave } from './save';
 import { buildAnswer, gameReducer, initialGameState, totalPoints, type RunConfig } from './gameReducer';
-import type { AnswerVia } from '../lib/types';
+import type { AnswerVia, Prompt } from '../lib/types';
 
 export const PACK_LABELS: Record<string, string> = {
   halloween: 'HALF-LIFE HALLOWEEN',
 };
 
+/** Runs that are saved, once per day each: the daily dig and the daily Challenge. */
+export type TrackedKind = 'daily' | 'challenge';
+
+const SLOTS = {
+  daily: { history: 'history', inProgress: 'inProgress' },
+  challenge: { history: 'challengeHistory', inProgress: 'challengeInProgress' },
+} as const;
+
+export const historyOf = (save: SaveData, kind: TrackedKind) => save[SLOTS[kind].history];
+export const inProgressOf = (save: SaveData, kind: TrackedKind) => save[SLOTS[kind].inProgress];
+const promptsFor = (kind: TrackedKind, key: string): Prompt[] => (kind === 'daily' ? promptsForDate(key) : challengeForDate(key));
+
+function withInProgress(save: SaveData, kind: TrackedKind, ip: InProgress | null): SaveData {
+  return { ...save, [SLOTS[kind].inProgress]: ip };
+}
+
 /**
- * Settle a saved in-progress daily dig on load: a prompt that was on screen during a reload
- * counts as a timeout (no free retries), and a dig from a previous day is dropped.
+ * Settle a saved in-progress dig on load: a prompt that was on screen during a reload counts
+ * as a timeout (no free retries), and a dig from a previous day — or from an older prompt
+ * bank — is dropped.
  */
-export function settleInProgress(save: SaveData, todayKey: string): SaveData {
-  const ip = save.inProgress;
+export function settleInProgress(save: SaveData, todayKey: string, kind: TrackedKind = 'daily'): SaveData {
+  const ip = inProgressOf(save, kind);
   if (!ip) return save;
-  if (ip.dateKey !== todayKey || save.history[ip.dateKey]) return { ...save, inProgress: null };
+  if (ip.dateKey !== todayKey || historyOf(save, kind)[ip.dateKey]) return withInProgress(save, kind, null);
+  const prompts = promptsFor(kind, ip.dateKey);
+  if (ip.answers.some((a, i) => a.promptId !== prompts[i]?.id)) return withInProgress(save, kind, null);
   let answers = ip.answers;
-  const prompts = promptsForDate(ip.dateKey);
   if (ip.open && answers.length < prompts.length) {
     answers = [...answers, buildAnswer(prompts[answers.length], null, 'timeout')];
   }
-  if (answers.length >= prompts.length) return finishDaily({ ...save, inProgress: null }, ip.dateKey, answers);
-  return { ...save, inProgress: { dateKey: ip.dateKey, answers, open: false } };
+  if (answers.length >= prompts.length) return finish(withInProgress(save, kind, null), kind, ip.dateKey, answers);
+  return withInProgress(save, kind, { dateKey: ip.dateKey, answers, open: false });
 }
 
-function finishDaily(save: SaveData, dateKey: string, answers: DigRecord['answers']): SaveData {
-  if (save.history[dateKey]) return { ...save, inProgress: null };
+function finish(save: SaveData, kind: TrackedKind, dateKey: string, answers: DigRecord['answers']): SaveData {
+  const history = historyOf(save, kind);
+  if (history[dateKey]) return withInProgress(save, kind, null);
   const record: DigRecord = {
     dateKey,
     digNumber: digNumber(dateKey),
@@ -35,12 +54,9 @@ function finishDaily(save: SaveData, dateKey: string, answers: DigRecord['answer
     points: totalPoints(answers),
     completedAt: Date.now(),
   };
-  return {
-    ...save,
-    history: { ...save.history, [dateKey]: record },
-    streak: nextStreak(save.streak, dateKey),
-    inProgress: null,
-  };
+  const next = withInProgress({ ...save, [SLOTS[kind].history]: { ...history, [dateKey]: record } }, kind, null);
+  // only the daily dig builds the streak
+  return kind === 'daily' ? { ...next, streak: nextStreak(save.streak, dateKey) } : next;
 }
 
 export function useGame() {
@@ -48,38 +64,45 @@ export function useGame() {
   const [state, dispatch] = useReducer(gameReducer, initialGameState);
   const todayKey = dateKeyFor(new Date());
 
-  // Settle any interrupted dig once, on load.
+  // Settle any interrupted digs once, on load.
   const settled = useRef(false);
   useEffect(() => {
     if (settled.current) return;
     settled.current = true;
-    update((s) => settleInProgress(s, dateKeyFor(new Date())));
+    const key = dateKeyFor(new Date());
+    update((s) => settleInProgress(settleInProgress(s, key, 'daily'), key, 'challenge'));
   }, [update]);
 
-  // Persist daily progress as the run advances.
+  // Persist daily and Challenge progress as the run advances.
   useEffect(() => {
-    if (state.screen !== 'run' || state.run.kind !== 'daily') return;
+    if (state.screen !== 'run' || state.run.kind === 'pack') return;
+    const kind = state.run.kind;
     const { dateKey } = state.run;
     if (state.phase === 'results') {
-      update((s) => finishDaily(s, dateKey, state.answers));
+      update((s) => finish(s, kind, dateKey, state.answers));
     } else {
       const open = state.phase === 'intro' || state.phase === 'prompt';
       update((s) => {
-        if (s.history[dateKey]) return s;
-        const ip = s.inProgress;
+        if (historyOf(s, kind)[dateKey]) return s;
+        const ip = inProgressOf(s, kind);
         if (ip && ip.dateKey === dateKey && ip.open === open && ip.answers.length === state.answers.length) return s;
-        return { ...s, inProgress: { dateKey, answers: state.answers, open } };
+        return withInProgress(s, kind, { dateKey, answers: state.answers, open });
       });
     }
   }, [state, update]);
 
-  const startDaily = useCallback(() => {
-    const key = dateKeyFor(new Date());
-    if (save.history[key]) return;
-    const run: RunConfig = { kind: 'daily', dateKey: key, digNumber: digNumber(key), prompts: promptsForDate(key) };
-    const resume = save.inProgress?.dateKey === key ? save.inProgress.answers : [];
-    dispatch({ type: 'START_RUN', run, answers: resume, now: Date.now() });
-  }, [save.history, save.inProgress]);
+  const start = useCallback(
+    (kind: TrackedKind) => {
+      const key = dateKeyFor(new Date());
+      if (historyOf(save, kind)[key]) return;
+      const run: RunConfig = { kind, dateKey: key, digNumber: digNumber(key), prompts: promptsFor(kind, key) };
+      const ip = inProgressOf(save, kind);
+      dispatch({ type: 'START_RUN', run, answers: ip?.dateKey === key ? ip.answers : [], now: Date.now() });
+    },
+    [save],
+  );
+  const startDaily = useCallback(() => start('daily'), [start]);
+  const startChallenge = useCallback(() => start('challenge'), [start]);
 
   const startPack = useCallback((packId: string) => {
     const key = dateKeyFor(new Date());
@@ -100,8 +123,9 @@ export function useGame() {
   const quit = useCallback(() => {
     dispatch({ type: 'QUIT' });
     // Leaving mid-prompt is treated like a reload: the open prompt becomes a timeout.
-    update((s) => settleInProgress(s, dateKeyFor(new Date())));
+    const key = dateKeyFor(new Date());
+    update((s) => settleInProgress(settleInProgress(s, key, 'daily'), key, 'challenge'));
   }, [update]);
 
-  return { state, todayKey, startDaily, startPack, submit, beginPrompt, next, quit };
+  return { state, todayKey, startDaily, startChallenge, startPack, submit, beginPrompt, next, quit };
 }

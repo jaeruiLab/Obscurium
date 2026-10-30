@@ -39,7 +39,7 @@ export function AnswerMap({ prompt, pickedZ, compact }: Props) {
                 key={e.z}
                 type="button"
                 className={cls}
-                style={cellStyle(e)}
+                style={{ ...cellStyle(e), ['--d' as string]: `${(e.gridRow + e.gridCol) * 14}ms` }}
                 tabIndex={tier ? 0 : -1}
                 aria-label={`${e.name}${tier ? `, ${TIER_LABEL[tier]}` : ', not valid'}${e.z === pickedZ ? ', your pick' : ''}`}
                 onClick={() => tier && setInfo(e.z === info ? null : e.z)}

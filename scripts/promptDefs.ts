@@ -3,10 +3,13 @@
  * (`where`) or lists symbols by hand (`symbols`) when classification needs a human call.
  * `npm run data:prompts` evaluates these into src/data/prompts.json — review the printed lists!
  */
-import type { Element, PromptCategory, Tier } from '../src/lib/types';
+import type { Element, PromptCategory, PromptMode, Tier } from '../src/lib/types';
+import { dailyDefs } from './promptDefs.daily';
+import { challengeDefs } from './promptDefs.challenge';
 
 export type PromptDef = {
   id: string;
+  mode: PromptMode;
   category: PromptCategory;
   difficulty: 1 | 2 | 3;
   text: string;
@@ -31,10 +34,11 @@ const US_STATE: Record<string, string> = {
   Nd: 'North Dakota', Ne: 'Nebraska', Nh: 'New Hampshire', Pa: 'Pennsylvania', Sc: 'South Carolina',
 };
 
-export const promptDefs: PromptDef[] = [
+const originalDefs: PromptDef[] = [
   // ───────────── SYMBOLS ─────────────
   {
     id: 'sym-not-english',
+    mode: 'daily',
     category: 'SYMBOLS',
     difficulty: 2,
     text: 'Name an element whose symbol doesn’t come from its English name',
@@ -48,6 +52,7 @@ export const promptDefs: PromptDef[] = [
   },
   {
     id: 'one-letter',
+    mode: 'daily',
     category: 'SYMBOLS',
     difficulty: 1,
     text: 'Name an element with a one-letter symbol',
@@ -61,6 +66,7 @@ export const promptDefs: PromptDef[] = [
   },
   {
     id: 'state-postal',
+    mode: 'challenge',
     category: 'SYMBOLS',
     difficulty: 2,
     text: 'Name an element whose symbol is also a US state’s postal code',
@@ -73,6 +79,7 @@ export const promptDefs: PromptDef[] = [
   },
   {
     id: 'symbol-c',
+    mode: 'daily',
     category: 'SYMBOLS',
     difficulty: 1,
     text: 'Name an element whose symbol starts with C',
@@ -85,6 +92,7 @@ export const promptDefs: PromptDef[] = [
   },
   {
     id: 'symbol-ends-b',
+    mode: 'challenge',
     category: 'SYMBOLS',
     difficulty: 2,
     text: 'Name an element whose symbol ends in the letter b',
@@ -97,6 +105,7 @@ export const promptDefs: PromptDef[] = [
   },
   {
     id: 'symbol-ends-r',
+    mode: 'challenge',
     category: 'SYMBOLS',
     difficulty: 2,
     text: 'Name an element with a two-letter symbol ending in r',
@@ -111,6 +120,7 @@ export const promptDefs: PromptDef[] = [
   // ───────────── PHYSICAL ─────────────
   {
     id: 'liquid-near-rt',
+    mode: 'daily',
     category: 'PHYSICAL',
     difficulty: 2,
     text: 'Name an element that’s liquid at or just above room temperature (melts below 40 °C)',
@@ -128,6 +138,7 @@ export const promptDefs: PromptDef[] = [
   },
   {
     id: 'gas-stp',
+    mode: 'daily',
     category: 'PHYSICAL',
     difficulty: 1,
     text: 'Name an element that’s a gas at standard temperature and pressure',
@@ -141,6 +152,7 @@ export const promptDefs: PromptDef[] = [
   },
   {
     id: 'ferromagnetic',
+    mode: 'challenge',
     category: 'PHYSICAL',
     difficulty: 2,
     text: 'Name an element that’s ferromagnetic at room temperature',
@@ -163,6 +175,7 @@ export const promptDefs: PromptDef[] = [
   },
   {
     id: 'denser-than-lead',
+    mode: 'challenge',
     category: 'PHYSICAL',
     difficulty: 3,
     text: 'Name an element that’s denser than lead (11.3 g/cm³)',
@@ -180,6 +193,7 @@ export const promptDefs: PromptDef[] = [
   },
   {
     id: 'solid-nonmetal',
+    mode: 'daily',
     category: 'PHYSICAL',
     difficulty: 2,
     text: 'Name a nonmetal that’s solid at room temperature',
@@ -194,6 +208,7 @@ export const promptDefs: PromptDef[] = [
   },
   {
     id: 'melts-above-3000',
+    mode: 'challenge',
     category: 'PHYSICAL',
     difficulty: 3,
     text: 'Name an element that melts above 3,000 °C',
@@ -209,6 +224,7 @@ export const promptDefs: PromptDef[] = [
   // ───────────── PERIODIC TABLE ─────────────
   {
     id: 'noble-gas',
+    mode: 'daily',
     category: 'PERIODIC TABLE',
     difficulty: 1,
     text: 'Name a noble gas',
@@ -222,6 +238,7 @@ export const promptDefs: PromptDef[] = [
   },
   {
     id: 'alkali',
+    mode: 'daily',
     category: 'PERIODIC TABLE',
     difficulty: 1,
     text: 'Name an alkali metal',
@@ -235,6 +252,7 @@ export const promptDefs: PromptDef[] = [
   },
   {
     id: 'alkaline-earth',
+    mode: 'daily',
     category: 'PERIODIC TABLE',
     difficulty: 1,
     text: 'Name an alkaline earth metal',
@@ -247,6 +265,7 @@ export const promptDefs: PromptDef[] = [
   },
   {
     id: 'metalloid',
+    mode: 'daily',
     category: 'PERIODIC TABLE',
     difficulty: 2,
     text: 'Name a metalloid',
@@ -263,6 +282,7 @@ export const promptDefs: PromptDef[] = [
   },
   {
     id: 'group-11',
+    mode: 'daily',
     category: 'PERIODIC TABLE',
     difficulty: 2,
     text: 'Name an element in group 11',
@@ -275,6 +295,7 @@ export const promptDefs: PromptDef[] = [
   },
   {
     id: 'lanthanide',
+    mode: 'daily',
     category: 'PERIODIC TABLE',
     difficulty: 3,
     text: 'Name a lanthanide',
@@ -287,6 +308,7 @@ export const promptDefs: PromptDef[] = [
   },
   {
     id: 'period-2',
+    mode: 'daily',
     category: 'PERIODIC TABLE',
     difficulty: 1,
     text: 'Name an element in period 2 (the second row) of the periodic table',
@@ -300,6 +322,7 @@ export const promptDefs: PromptDef[] = [
   },
   {
     id: 'period-4-transition',
+    mode: 'daily',
     category: 'PERIODIC TABLE',
     difficulty: 2,
     text: 'Name a transition metal in period 4 (the fourth row)',
@@ -314,9 +337,10 @@ export const promptDefs: PromptDef[] = [
   // ───────────── NUCLEAR ─────────────
   {
     id: 'no-stable-isotopes',
-    category: 'NUCLEAR',
+    mode: 'daily',
+    category: 'PHYSICAL',
     difficulty: 2,
-    text: 'Name an element with no stable isotopes',
+    text: 'Name a radioactive element (one with no stable isotopes)',
     where: (e) => e.stableIsotopes === 0,
     exclude: ['Bi'],
     edge: { Bi: 'bismuth-209 does decay, but its half-life is a billion times the age of the universe' },
@@ -328,6 +352,7 @@ export const promptDefs: PromptDef[] = [
   },
   {
     id: 'z-over-100',
+    mode: 'challenge',
     category: 'NUCLEAR',
     difficulty: 2,
     text: 'Name an element with an atomic number above 100',
@@ -340,6 +365,7 @@ export const promptDefs: PromptDef[] = [
   },
   {
     id: 'named-after-lab',
+    mode: 'challenge',
     category: 'NUCLEAR',
     difficulty: 3,
     text: 'Name an element named after a research lab or the place where one is',
@@ -353,6 +379,7 @@ export const promptDefs: PromptDef[] = [
   },
   {
     id: 'nuclear-scientist',
+    mode: 'challenge',
     category: 'NUCLEAR',
     difficulty: 2,
     text: 'Name an element named after a nuclear scientist',
@@ -370,7 +397,8 @@ export const promptDefs: PromptDef[] = [
   },
   {
     id: 'actinide',
-    category: 'NUCLEAR',
+    mode: 'daily',
+    category: 'PERIODIC TABLE',
     difficulty: 2,
     text: 'Name an actinide',
     where: (e) => e.category === 'actinide',
@@ -384,6 +412,7 @@ export const promptDefs: PromptDef[] = [
   // ───────────── HISTORY ─────────────
   {
     id: 'antiquity',
+    mode: 'challenge',
     category: 'HISTORY',
     difficulty: 2,
     text: 'Name an element known since ancient times',
@@ -402,6 +431,7 @@ export const promptDefs: PromptDef[] = [
   },
   {
     id: 'discovered-1700s',
+    mode: 'challenge',
     category: 'HISTORY',
     difficulty: 2,
     text: 'Name an element discovered in the 1700s',
@@ -414,6 +444,7 @@ export const promptDefs: PromptDef[] = [
   },
   {
     id: 'discovered-1898',
+    mode: 'challenge',
     category: 'HISTORY',
     difficulty: 3,
     text: 'Name an element discovered in 1898',
@@ -427,6 +458,7 @@ export const promptDefs: PromptDef[] = [
   },
   {
     id: 'ramsay',
+    mode: 'challenge',
     category: 'HISTORY',
     difficulty: 3,
     text: 'Name an element discovered or co-discovered by William Ramsay',
@@ -446,6 +478,7 @@ export const promptDefs: PromptDef[] = [
   },
   {
     id: 'davy',
+    mode: 'challenge',
     category: 'HISTORY',
     difficulty: 3,
     text: 'Name an element first isolated by Humphry Davy',
@@ -470,6 +503,7 @@ export const promptDefs: PromptDef[] = [
   // ───────────── ETYMOLOGY ─────────────
   {
     id: 'named-person',
+    mode: 'challenge',
     category: 'ETYMOLOGY',
     difficulty: 2,
     text: 'Name an element named after a person',
@@ -487,6 +521,7 @@ export const promptDefs: PromptDef[] = [
   },
   {
     id: 'named-place',
+    mode: 'challenge',
     category: 'ETYMOLOGY',
     difficulty: 2,
     text: 'Name an element named after a place on Earth',
@@ -502,6 +537,7 @@ export const promptDefs: PromptDef[] = [
   },
   {
     id: 'celestial',
+    mode: 'challenge',
     category: 'ETYMOLOGY',
     difficulty: 2,
     text: 'Name an element named after a celestial body',
@@ -517,6 +553,7 @@ export const promptDefs: PromptDef[] = [
   },
   {
     id: 'ends-ine',
+    mode: 'challenge',
     category: 'ETYMOLOGY',
     difficulty: 1,
     text: 'Name an element whose name ends in “-ine”',
@@ -529,6 +566,7 @@ export const promptDefs: PromptDef[] = [
   },
   {
     id: 'myth-figure',
+    mode: 'challenge',
     category: 'ETYMOLOGY',
     difficulty: 3,
     text: 'Name an element named after a figure from mythology',
@@ -548,6 +586,7 @@ export const promptDefs: PromptDef[] = [
   },
   {
     id: 'named-color',
+    mode: 'challenge',
     category: 'ETYMOLOGY',
     difficulty: 2,
     text: 'Name an element whose name comes from a color',
@@ -560,6 +599,7 @@ export const promptDefs: PromptDef[] = [
   },
   {
     id: 'named-woman',
+    mode: 'challenge',
     category: 'ETYMOLOGY',
     difficulty: 3,
     text: 'Name an element named after a woman, real or mythological',
@@ -583,3 +623,5 @@ export const promptDefs: PromptDef[] = [
     packs: ['etymology'],
   },
 ];
+
+export const promptDefs: PromptDef[] = [...originalDefs, ...dailyDefs, ...challengeDefs];

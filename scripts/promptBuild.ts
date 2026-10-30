@@ -43,6 +43,7 @@ export function buildPrompts(): Prompt[] {
 
     const p: Prompt = {
       id: d.id,
+      mode: d.mode,
       category: d.category,
       difficulty: d.difficulty,
       text: d.text,

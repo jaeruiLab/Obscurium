@@ -100,6 +100,11 @@ export const sfx = {
     tone(note(-17), 0.18, 0.3, 'square', 0.45, note(-29));
   },
   dig: () => noise(0, 0.05, 0.25, 600),
+  /** soft bit-crushed whoosh under the pixel wipe */
+  wipe: () => {
+    noise(0, 0.22, 0.22, 2400);
+    [0, 5, 10, 15].forEach((s, i) => tone(note(s - 12), i * 0.05, 0.06, 'square', 0.18));
+  },
   jingle: () => [0, 4, 7, 12, 7, 12, 16].forEach((s, i) => tone(note(s), i * 0.09, 0.14, 'square', 0.45)),
   error: () => tone(note(-9), 0, 0.12, 'square', 0.4, note(-12)),
 };

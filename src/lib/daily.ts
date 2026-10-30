@@ -3,7 +3,13 @@ import calendarData from '../data/calendar.json';
 import { cyrb53, mulberry32, pick, shuffle } from './rng';
 import type { Prompt } from './types';
 
+/** Every prompt (daily and challenge). */
 export const PROMPTS = promptsData as Prompt[];
+/** Broad gen-chem prompts for the daily dig. */
+export const DAILY_PROMPTS = PROMPTS.filter((p) => p.mode === 'daily');
+/** Niche prompts for Challenge mode. */
+export const CHALLENGE_PROMPTS = PROMPTS.filter((p) => p.mode === 'challenge');
+export const PROMPT_BY_ID = new Map(PROMPTS.map((p) => [p.id, p]));
 const CALENDAR = calendarData as Record<string, string[]>;
 
 export const LAUNCH_DATE = '2026-10-29';
@@ -54,9 +60,15 @@ export function msUntilNextDig(now: Date): number {
   return hi - now.getTime();
 }
 
-/** Days a prompt must rest before it can repeat; grows with the pool, capped at 60. */
-export function cooldownDays(poolSize: number): number {
-  return Math.max(0, Math.min(60, Math.floor(poolSize / PROMPTS_PER_RUN) - 1));
+/**
+ * Days a prompt must rest before it can repeat. It grows with the pool (capped at 60), but never
+ * past what the smallest category can supply, since every category gets a slot each day.
+ */
+export function cooldownDays(pool: Prompt[]): number {
+  const perCategory = new Map<string, number>();
+  for (const p of pool) perCategory.set(p.category, (perCategory.get(p.category) ?? 0) + 1);
+  const smallest = Math.min(...perCategory.values());
+  return Math.max(0, Math.min(60, Math.floor(pool.length / PROMPTS_PER_RUN) - 1, smallest - 1));
 }
 
 function sortByDifficulty(prompts: Prompt[]): Prompt[] {
@@ -93,8 +105,8 @@ export function seededPick(seed: string, pool: Prompt[], recent: Set<string>, co
 
 const dayCaches = new WeakMap<Prompt[], string[][]>();
 
-/** The 7 prompts for a Chicago calendar day. Deterministic for every player. */
-export function promptsForDate(key: string, pool: Prompt[] = PROMPTS): Prompt[] {
+/** The 7 daily-dig prompts for a Chicago calendar day. Deterministic for every player. */
+export function promptsForDate(key: string, pool: Prompt[] = DAILY_PROMPTS): Prompt[] {
   const byId = new Map(pool.map((p) => [p.id, p]));
   return dailyIds(key, pool).map((id) => byId.get(id)!);
 }
@@ -104,19 +116,25 @@ function scheduledFor(key: string, pool: Prompt[]): string[] | null {
   return ids?.length && ids.every((id) => pool.some((p) => p.id === id)) ? ids : null;
 }
 
+/** Today's Challenge: 7 niche prompts, also the same for everyone. */
+export function challengeForDate(key: string): Prompt[] {
+  return promptsForDate(key, CHALLENGE_PROMPTS);
+}
+
 function dailyIds(key: string, pool: Prompt[]): string[] {
   const index = daysBetween(LAUNCH_DATE, key);
-  if (index < 0) return scheduledFor(key, pool) ?? seededPick(key, pool, new Set()).map((p) => p.id);
+  const salt = pool[0]?.mode === 'challenge' ? 'challenge:' : '';
+  if (index < 0) return scheduledFor(key, pool) ?? seededPick(salt + key, pool, new Set()).map((p) => p.id);
 
   // Walk forward from launch day so every day's cooldown window is itself deterministic.
   let days = dayCaches.get(pool);
   if (!days) dayCaches.set(pool, (days = []));
-  const cooldown = cooldownDays(pool.length);
+  const cooldown = cooldownDays(pool);
   for (let d = days.length; d <= index; d++) {
     const k = addDays(LAUNCH_DATE, d);
     const recent = new Set<string>();
     for (let r = Math.max(0, d - cooldown); r < d; r++) days[r].forEach((id) => recent.add(id));
-    days.push(scheduledFor(k, pool) ?? seededPick(k, pool, recent).map((p) => p.id));
+    days.push(scheduledFor(k, pool) ?? seededPick(salt + k, pool, recent).map((p) => p.id));
   }
   return days[index];
 }

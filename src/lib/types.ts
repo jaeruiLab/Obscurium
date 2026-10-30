@@ -43,6 +43,10 @@ export type Element = {
   boilK: number | null;
   density: number | null;
   electronegativity: number | null;
+  /** first ionization energy, eV */
+  ionizationEnergy: number | null;
+  /** ground-state configuration, e.g. "[Ar]3d5 4s1" (superheavies are predictions) */
+  electronConfiguration: string;
   radioactive: boolean;
   stableIsotopes: number;
   occurrence: 'primordial' | 'from-decay' | 'synthetic';
@@ -56,10 +60,23 @@ export type Element = {
 
 export type Tier = 'bedrock' | 'ore' | 'vein' | 'trace' | 'rare' | 'mole' | 'technical';
 
-export type PromptCategory = 'ETYMOLOGY' | 'PHYSICAL' | 'PERIODIC TABLE' | 'NUCLEAR' | 'SYMBOLS' | 'HISTORY';
+export type PromptCategory =
+  | 'PERIODIC TABLE'
+  | 'TRENDS'
+  | 'PHYSICAL'
+  | 'CHEMICAL'
+  | 'ELECTRONS'
+  | 'SYMBOLS'
+  | 'ETYMOLOGY'
+  | 'NUCLEAR'
+  | 'HISTORY';
+
+/** daily = broad gen-chem prompts; challenge = the niche ones */
+export type PromptMode = 'daily' | 'challenge';
 
 export type Prompt = {
   id: string;
+  mode: PromptMode;
   category: PromptCategory;
   difficulty: 1 | 2 | 3;
   text: string;
