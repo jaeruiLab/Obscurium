@@ -315,6 +315,19 @@ button.chip:hover {
   letter-spacing: 0.14em;
   color: var(--ink);
 }
+/* the address on a rig-LCD plate, big enough to read in screen recordings */
+.site-url {
+  display: inline-block;
+  margin: 14px 0 0;
+  padding: 0 12px 2px;
+  font-family: var(--font-symbol);
+  font-size: 24px;
+  line-height: 1.15;
+  letter-spacing: 0.04em;
+  color: var(--copper);
+  background: var(--panel);
+  box-shadow: 0 0 0 2px var(--ink);
+}
 
 .title-column {
   position: absolute;
@@ -1744,6 +1757,7 @@ html.reduce-motion *::after {
 }
 .title-block .subtitle,
 .title-block .tagline,
+.title-block .site-url,
 .title-column > * {
   animation: rise-in 0.32s steps(4) backwards;
 }
@@ -1752,6 +1766,9 @@ html.reduce-motion *::after {
 }
 .title-block .tagline {
   animation-delay: 0.85s;
+}
+.title-block .site-url {
+  animation-delay: 0.95s;
 }
 .title-column > :nth-child(1) {
   animation-delay: 0.6s;

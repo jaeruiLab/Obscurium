@@ -4,6 +4,9 @@ import { useNow } from '../state/useTimer';
 import { HowToPlay } from './InfoPanels';
 import { formatCountdown } from './Results';
 
+/** Shown on the title screen so the address is readable in screenshots and videos. */
+const SITE_URL = 'playobscurium.com';
+
 type Props = {
   digNumber: number;
   streak: number;
@@ -38,6 +41,7 @@ export function TitleScreen(props: Props) {
         <Wordmark />
         <p className="subtitle">THE DAILY DIG</p>
         <p className="tagline">7 prompts · 25 seconds each · rarer elements dig deeper</p>
+        <p className="site-url">{SITE_URL}</p>
       </div>
 
       <div className="title-column">
