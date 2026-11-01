@@ -36,7 +36,7 @@ describe('dig numbers', () => {
   it('launch day is dig #1', () => {
     expect(digNumber(LAUNCH_DATE)).toBe(1);
     expect(digNumber(addDays(LAUNCH_DATE, 1))).toBe(2);
-    expect(digNumber('2027-10-29')).toBe(366);
+    expect(digNumber('2027-11-01')).toBe(366);
   });
 
   it('addDays crosses month and year boundaries', () => {

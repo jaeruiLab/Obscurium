@@ -12,7 +12,7 @@ export const CHALLENGE_PROMPTS = PROMPTS.filter((p) => p.mode === 'challenge');
 export const PROMPT_BY_ID = new Map(PROMPTS.map((p) => [p.id, p]));
 const CALENDAR = calendarData as Record<string, string[]>;
 
-export const LAUNCH_DATE = '2026-10-29';
+export const LAUNCH_DATE = '2026-11-01';
 export const TIME_ZONE = 'America/Chicago';
 export const PROMPTS_PER_RUN = 7;
 export const SECONDS_PER_PROMPT = 25;
