@@ -13,7 +13,7 @@ const TOGGLES: [BoolKey, string, string][] = [
 ];
 
 export function SettingsPanel() {
-  const { save, update, setSetting, reducedMotion } = useSave();
+  const { save, update, setSetting, reducedMotion, systemReducedMotion } = useSave();
   const s = save.settings;
   const [confirmReset, setConfirmReset] = useState(false);
 
@@ -34,7 +34,10 @@ export function SettingsPanel() {
         <span className="toggle-box" aria-hidden="true" />
         <span className="toggle-text">
           Reduce motion
-          <small>{s.reduceMotion == null ? 'Following your system setting' : 'No parallax, camera cuts instead of scrolling'}</small>
+          <small>
+            Camera cuts instead of scrolling, no slides or wipes
+            {systemReducedMotion && !reducedMotion && ' (your device asks for less motion)'}
+          </small>
         </span>
       </label>
       <div className="danger">

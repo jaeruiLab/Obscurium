@@ -1,4 +1,4 @@
-import { useEffect, useRef } from 'react';
+import { useEffect, useRef, useState } from 'react';
 import { el } from '../lib/elements';
 import { invalidReason, validReason } from '../lib/reasons';
 import { METERS_PER_POINT } from '../lib/scoring';
@@ -6,6 +6,7 @@ import type { Answer, Prompt } from '../lib/types';
 import { AnswerMap } from './AnswerMap';
 import { ElementTile } from './ElementTile';
 import { PixelDissolve } from './PixelDissolve';
+import { useReducedMotion } from '../state/save';
 import { TierBadge } from './TierBadge';
 
 type Props = {
@@ -14,12 +15,35 @@ type Props = {
   index: number;
   total: number;
   glyphs: boolean;
+  /** the drill starts digging (called on click) */
+  onLeave: () => void;
+  /** the card has slid away; move on */
   onNext: () => void;
+  /** ms from KEEP DIGGING to onNext */
+  exitMs: number;
 };
 
-export function Reveal({ prompt, answer, index, total, glyphs, onNext }: Props) {
+/** How long the reveal card takes to sink out of view. */
+export const REVEAL_EXIT_MS = 320;
+
+export function Reveal({ prompt, answer, index, total, glyphs, onLeave, onNext, exitMs }: Props) {
   const next = useRef<HTMLButtonElement>(null);
   useEffect(() => next.current?.focus({ preventScroll: true }), []);
+  const reduced = useReducedMotion();
+  const [leaving, setLeaving] = useState(false);
+  const timer = useRef<ReturnType<typeof setTimeout>>(undefined);
+  useEffect(() => () => clearTimeout(timer.current), []);
+
+  const keepDigging = () => {
+    if (leaving) return;
+    onLeave();
+    if (reduced) {
+      onNext();
+      return;
+    }
+    setLeaving(true);
+    timer.current = setTimeout(onNext, exitMs);
+  };
 
   const mole = el(prompt.moleZ);
   const isMole = answer.z === prompt.moleZ;
@@ -32,7 +56,7 @@ export function Reveal({ prompt, answer, index, total, glyphs, onNext }: Props) 
         : invalidReason(prompt, answer.z);
 
   return (
-    <section className="reveal panel" aria-labelledby="reveal-title">
+    <section className={`reveal panel${leaving ? ' leaving' : ''}`} aria-labelledby="reveal-title">
       <PixelDissolve block={14} duration={380} />
       <div className="pc-head">
         <span className="tag">{prompt.category}</span>
@@ -64,7 +88,7 @@ export function Reveal({ prompt, answer, index, total, glyphs, onNext }: Props) 
         <p>{prompt.moleFact}</p>
       </div>
 
-      <button ref={next} type="button" className="btn btn-primary" onClick={onNext}>
+      <button ref={next} type="button" className="btn btn-primary" onClick={keepDigging} disabled={leaving}>
         <span className="arrow">▼</span> {last ? 'SEE YOUR CORE SAMPLE' : 'KEEP DIGGING'} <span className="arrow">▼</span>
       </button>
 

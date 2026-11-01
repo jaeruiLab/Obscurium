@@ -1884,3 +1884,33 @@ html.reduce-motion *::after {
 .title-column > :nth-child(7) {
   animation-delay: 1.02s;
 }
+
+/* ───────────────── descending between questions ───────────────── */
+/* KEEP DIGGING: the reveal card sinks after the mole, then the next question slides down
+   from above and settles as the drill stops (its duration is matched to the dig). */
+.prompt-card.descend {
+  animation: descend-in var(--descend-ms, 800ms) cubic-bezier(0.215, 0.61, 0.355, 1) backwards;
+}
+.reveal.leaving {
+  animation: descend-out 0.32s cubic-bezier(0.55, 0.055, 0.675, 0.19) forwards;
+  pointer-events: none;
+}
+/* keep the sinking card from growing a scrollbar */
+.run-screen.descending {
+  overflow: hidden;
+}
+@keyframes descend-in {
+  from {
+    transform: translateY(-62vh);
+    opacity: 0;
+  }
+  30% {
+    opacity: 1;
+  }
+}
+@keyframes descend-out {
+  to {
+    transform: translateY(58vh);
+    opacity: 0;
+  }
+}

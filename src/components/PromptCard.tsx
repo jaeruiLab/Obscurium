@@ -11,6 +11,8 @@ type Props = {
   phase: 'intro' | 'prompt';
   phaseStartedAt: number;
   introMs: number;
+  /** slide-in duration, matched to the drill’s dig */
+  descendMs: number;
   showTimer: boolean;
   acceptNumbers: boolean;
   onSubmit: (z: number) => void;
@@ -48,7 +50,7 @@ export function PromptCard(props: Props) {
   const countdown = Math.max(1, Math.ceil((phaseStartedAt + introMs - now) / 1000));
 
   return (
-    <section className="prompt-card panel" aria-labelledby="prompt-text">
+    <section className="prompt-card panel descend" style={{ ['--descend-ms' as string]: `${props.descendMs}ms` }} aria-labelledby="prompt-text">
       <PixelDissolve block={14} duration={360} />
       <div className="pc-head">
         <span className="tag">{prompt.category}</span>

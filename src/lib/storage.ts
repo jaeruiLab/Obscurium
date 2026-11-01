@@ -3,8 +3,8 @@ import type { Answer } from './types';
 
 export type Settings = {
   sound: boolean;
-  /** null = follow the OS prefers-reduced-motion setting */
-  reduceMotion: boolean | null;
+  /** off by default: the dig animation is the game's feedback, so players opt out here */
+  reduceMotion: boolean;
   scanlines: boolean;
   colorblind: boolean;
   acceptNumbers: boolean;
@@ -39,7 +39,7 @@ export type SaveData = {
 
 export const DEFAULT_SETTINGS: Settings = {
   sound: true,
-  reduceMotion: null,
+  reduceMotion: false,
   scanlines: true,
   colorblind: false,
   acceptNumbers: false,
@@ -70,10 +70,10 @@ export function loadSave(): SaveData {
       const parsed = JSON.parse(raw) as Partial<SaveData>;
       if (parsed && parsed.v === 1) {
         const base = freshSave();
-        // only carry over settings that still exist (older saves may hold retired ones)
+        // only carry over settings that still exist with the same type (older saves may hold retired ones)
         const settings = { ...base.settings };
         for (const k of Object.keys(settings) as (keyof Settings)[]) {
-          if (parsed.settings && k in parsed.settings) (settings as Record<string, unknown>)[k] = parsed.settings[k];
+          if (parsed.settings && typeof parsed.settings[k] === typeof settings[k]) (settings as Record<string, unknown>)[k] = parsed.settings[k];
         }
         return {
           v: 1,

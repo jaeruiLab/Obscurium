@@ -1,17 +1,25 @@
 import { el } from '../lib/elements';
-import { METERS_PER_POINT } from '../lib/scoring';
 import type { Answer } from '../lib/types';
 import { useCountUp } from '../state/useCountUp';
+import { digEase } from '../scene/world';
 
-type Props = { answers: Answer[]; total: number; current: number; points: number };
+type Props = {
+  answers: Answer[];
+  total: number;
+  current: number;
+  points: number;
+  depthM: number;
+  /** how long the drill takes to reach depthM, so the readout ticks in step with it */
+  digMs: number;
+};
 
 /** Rig-LCD readouts plus seven specimen slots that fill with each dug element. */
-export function Hud({ answers, total, current, points }: Props) {
-  const depth = useCountUp(points * METERS_PER_POINT, 1100);
+export function Hud({ answers, total, current, points, depthM, digMs }: Props) {
+  const depth = useCountUp(depthM, digMs, 45, digEase);
   const shownPoints = useCountUp(points, 1100);
   return (
     <header className="hud">
-      <div className="lcd" aria-label={`Depth ${points * METERS_PER_POINT} meters`}>
+      <div className="lcd" aria-label={`Depth ${depthM} meters`}>
         <span className="lcd-label">DEPTH</span>
         <span className="lcd-value copper">
           <i aria-hidden="true">-8,888m</i>

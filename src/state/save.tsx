@@ -6,8 +6,10 @@ type SaveApi = {
   save: SaveData;
   update: (fn: (s: SaveData) => SaveData) => void;
   setSetting: <K extends keyof Settings>(key: K, value: Settings[K]) => void;
-  /** effective reduced-motion: explicit setting, else the OS preference */
+  /** the in-game Reduce motion setting */
   reducedMotion: boolean;
+  /** the OS asks for reduced motion (shown as a hint next to the setting) */
+  systemReducedMotion: boolean;
 };
 
 const SaveCtx = createContext<SaveApi | null>(null);
@@ -44,12 +46,15 @@ export function SaveProvider({ children, initial }: { children: ReactNode; initi
 
   useEffect(() => setSoundEnabled(save.settings.sound), [save.settings.sound]);
 
-  const reducedMotion = save.settings.reduceMotion ?? osReduced;
+  const reducedMotion = save.settings.reduceMotion;
   useEffect(() => {
     document.documentElement.classList.toggle('reduce-motion', reducedMotion);
   }, [reducedMotion]);
 
-  const api = useMemo(() => ({ save, update, setSetting, reducedMotion }), [save, update, setSetting, reducedMotion]);
+  const api = useMemo(
+    () => ({ save, update, setSetting, reducedMotion, systemReducedMotion: osReduced }),
+    [save, update, setSetting, reducedMotion, osReduced],
+  );
   return <SaveCtx.Provider value={api}>{children}</SaveCtx.Provider>;
 }
 
