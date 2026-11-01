@@ -10,7 +10,8 @@ type Wipe = (change: () => void) => void;
 const WipeCtx = createContext<Wipe>((change) => change());
 
 const BLOCK = 28;
-const COVER_MS = 240;
+/** How long the wipe takes to cover the screen. */
+export const WIPE_COVER_MS = 240;
 const UNCOVER_MS = 340;
 const BOOT_MS = 520;
 
@@ -94,7 +95,7 @@ export function PixelWipeProvider({ children }: { children: ReactNode }) {
       const grid = setup();
       void (async () => {
         try {
-          await animate(g, grid, 'in', COVER_MS, id);
+          await animate(g, grid, 'in', WIPE_COVER_MS, id);
           change();
           // let React commit the new page before uncovering it
           await nextFrame();

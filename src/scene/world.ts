@@ -5,6 +5,10 @@ export const depthToPx = (m: number) => m / M_PER_PX;
 export const WORLD_DEPTH_PX = depthToPx(8000);
 /** Where the drill bit rests at 0 m, just under the grass. */
 export const DRILL_START_PX = 6;
+/** How long the drill takes to dig a distance, in seconds (cards and the depth readout move in time with it). */
+export const digSeconds = (distPx: number) => Math.min(2.2, 0.8 + distPx / 230);
+/** Dig progress curve: eases in and out so the drill starts and stops smoothly. */
+export const digEase = (t: number) => (1 - Math.cos(Math.PI * t)) / 2;
 
 type RGB = [number, number, number];
 const hex = (h: string): RGB => [1, 3, 5].map((i) => parseInt(h.slice(i, i + 2), 16)) as RGB;

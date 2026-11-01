@@ -17,7 +17,7 @@ import {
   rigX,
   type SceneState,
 } from './draw';
-import { depthToPx, DRILL_START_PX, dustColor, M_PER_PX, renderGround } from './world';
+import { depthToPx, digEase, digSeconds, DRILL_START_PX, dustColor, M_PER_PX, renderGround } from './world';
 
 export type SceneProps = {
   mode: 'title' | 'run';
@@ -61,6 +61,7 @@ export function SceneCanvas(props: SceneProps) {
       moleY: 0,
       titleBlend: live.current.mode === 'title' ? 1 : 0,
       shake: 0,
+      digging: false,
       ground: null,
       particles: [],
       clouds: [],
@@ -115,15 +116,16 @@ export function SceneCanvas(props: SceneProps) {
       const target = targetDrill();
       if (target !== tween.to) {
         const dist = Math.abs(target - s.drillPx);
-        tween = { from: s.drillPx, to: target, t: 0, dur: Math.min(1.8, 0.5 + dist / 140) };
+        tween = { from: s.drillPx, to: target, t: 0, dur: digSeconds(dist) };
         lastTickM = Math.max(0, Math.floor(((s.drillPx - DRILL_START_PX) * M_PER_PX) / 100));
       }
       if (tween.t < 1) {
         tween.t = still ? 1 : Math.min(1, tween.t + dt / tween.dur);
-        const e = 1 - (1 - tween.t) ** 3;
+        const e = digEase(tween.t);
         const prev = s.drillPx;
         s.drillPx = tween.from + (tween.to - tween.from) * e;
         const digging = s.drillPx > prev && s.drillPx > 0;
+        s.digging = digging;
         if (digging && !still) {
           const color = dustColor(s.drillPx);
           for (let i = 0; i < 3; i++) {
@@ -137,6 +139,8 @@ export function SceneCanvas(props: SceneProps) {
           live.current.onDigTick?.();
         }
       }
+
+      if (tween.t >= 1) s.digging = false;
 
       // particles
       for (const p of s.particles) {
@@ -153,7 +157,9 @@ export function SceneCanvas(props: SceneProps) {
       const m = moleTarget();
       const km = still ? 1 : 1 - Math.exp(-dt * 5);
       s.moleX += (m.x - s.moleX) * km;
-      s.moleY += (m.y - s.moleY) * km;
+      // during a run the mole rides the drill bit; it only glides while moving between the title spot and the rig
+      const riding = live.current.mode === 'run' && Math.abs(m.x - s.moleX) < 1;
+      s.moleY = riding ? m.y : s.moleY + (m.y - s.moleY) * km;
       const blendTarget = live.current.mode === 'title' ? 1 : 0;
       s.titleBlend += (blendTarget - s.titleBlend) * (still ? 1 : 1 - Math.exp(-dt * 3));
 

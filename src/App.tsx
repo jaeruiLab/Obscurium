@@ -5,10 +5,10 @@ import { Icon } from './components/Icons';
 import { About, HowToPlay, Privacy, Skins } from './components/InfoPanels';
 import { Menu, type MenuItem } from './components/Menu';
 import { Modal } from './components/Modal';
-import { usePixelWipe } from './components/PixelWipe';
+import { usePixelWipe, WIPE_COVER_MS } from './components/PixelWipe';
 import { PromptCard } from './components/PromptCard';
 import { Results } from './components/Results';
-import { Reveal } from './components/Reveal';
+import { Reveal, REVEAL_EXIT_MS } from './components/Reveal';
 import { SettingsPanel } from './components/SettingsPanel';
 import { StatsSummary } from './components/StatsPanel';
 import { TitleScreen } from './components/TitleScreen';
@@ -17,6 +17,7 @@ import { el } from './lib/elements';
 import { TIER_LABEL } from './lib/scoring';
 import { liveStreak, type DigRecord } from './lib/storage';
 import { SceneCanvas } from './scene/SceneCanvas';
+import { depthToPx, digSeconds } from './scene/world';
 import { depthFor, totalPoints } from './state/gameReducer';
 import { useSave } from './state/save';
 import { useGame, type TrackedKind } from './state/useGame';
@@ -46,6 +47,11 @@ export function App() {
   const [viewing, setViewing] = useState<{ record: DigRecord; kind: TrackedKind } | null>(null);
   const [shakeKey, setShakeKey] = useState(0);
   const [announce, setAnnounce] = useState('');
+  /** true once KEEP DIGGING is pressed: the drill digs the revealed answer's meters */
+  const [descending, setDescending] = useState(false);
+  useEffect(() => {
+    if (!run) setDescending(false);
+  }, [run]);
 
   const settings = save.settings;
   // Browsers only allow audio after a user gesture.
@@ -130,7 +136,17 @@ export function App() {
   const todayChallenge = save.challengeHistory[game.todayKey];
   // rebuild from the record's own prompt ids, so old digs survive prompt-bank changes
   const viewingPrompts = viewing ? viewing.record.answers.map((a) => PROMPT_BY_ID.get(a.promptId)).filter((p) => p != null) : [];
-  const sceneDepth = run ? depthFor(run.answers) : viewing ? viewing.record.points * 10 : 0;
+  // The drill only digs a revealed answer once the player presses KEEP DIGGING.
+  const dugAnswers = run ? (run.phase === 'reveal' && !descending ? run.answers.slice(0, -1) : run.answers) : [];
+  const sceneDepth = run ? depthFor(dugAnswers) : viewing ? viewing.record.points * 10 : 0;
+  // How long the drill takes to dig the answer on reveal (or the one just dug, once the next question is up).
+  const digAnswer = run ? run.answers[run.phase === 'reveal' ? run.index : run.index - 1] : undefined;
+  const digMs = digSeconds(depthToPx((digAnswer?.points ?? 0) * 10)) * 1000;
+  // The next question slides in over what's left of the dig after the reveal card sinks away.
+  const descendMs = run?.index ? Math.max(450, digMs - REVEAL_EXIT_MS) : 800;
+  // The last dig plays out in full; the wipe to results finishes covering as the drill stops.
+  const lastPrompt = !!run && run.index >= run.run.prompts.length - 1;
+  const exitMs = lastPrompt ? Math.max(REVEAL_EXIT_MS, digMs - WIPE_COVER_MS) : REVEAL_EXIT_MS;
 
   return (
     <>
@@ -185,8 +201,8 @@ export function App() {
       )}
 
       {run && (
-        <main className={`run-screen phase-${run.phase}`}>
-          {run.phase !== 'results' && <Hud answers={run.answers} total={run.run.prompts.length} current={run.index} points={totalPoints(run.answers)} />}
+        <main className={`run-screen phase-${run.phase}${descending ? ' descending' : ''}`}>
+          {run.phase !== 'results' && <Hud answers={run.answers} total={run.run.prompts.length} current={run.index} points={totalPoints(run.answers)} depthM={depthFor(dugAnswers)} digMs={digMs} />}
           {(run.phase === 'intro' || run.phase === 'prompt') && (
             <PromptCard
               key={run.index}
@@ -196,6 +212,7 @@ export function App() {
               phase={run.phase}
               phaseStartedAt={run.phaseStartedAt}
               introMs={introMsFor(run.index)}
+              descendMs={descendMs}
               showTimer={settings.showTimer}
               acceptNumbers={settings.acceptNumbers}
               onSubmit={(z) => {
@@ -213,12 +230,20 @@ export function App() {
               index={run.index}
               total={run.run.prompts.length}
               glyphs={settings.colorblind}
-              onNext={() => {
+              onLeave={() => {
                 sfx.click();
-                // the last reveal hands off to the results page behind a full wipe
-                if (run.index >= run.run.prompts.length - 1) wipe(game.next);
-                else game.next();
+                setDescending(true);
               }}
+              onNext={() => {
+                const advance = () => {
+                  setDescending(false);
+                  game.next();
+                };
+                // the last reveal hands off to the results page behind a full wipe
+                if (lastPrompt) wipe(advance);
+                else advance();
+              }}
+              exitMs={exitMs}
             />
           )}
           {run.phase === 'results' && (

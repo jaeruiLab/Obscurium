@@ -17,6 +17,8 @@ export type SceneState = {
   moleY: number;
   titleBlend: number;
   shake: number;
+  /** true while the drill is moving down */
+  digging: boolean;
   ground: HTMLCanvasElement | null;
   particles: Particle[];
   clouds: Cloud[];
@@ -275,7 +277,9 @@ export function drawParticles(g: CanvasRenderingContext2D, s: SceneState, cam: n
 
 export function drawMole(g: CanvasRenderingContext2D, s: SceneState, cam: number, still: boolean) {
   const bob = still || s.titleBlend < 0.5 ? 0 : Math.round(Math.sin(s.t * 2.2) * 1.2);
-  const x = Math.round(s.moleX);
+  // a 1px judder while the drill bites through rock
+  const judder = s.digging && !still ? Math.floor(s.t * 18) % 2 : 0;
+  const x = Math.round(s.moleX) + judder;
   const y = Math.round(s.moleY - cam + bob);
   // headlamp glow
   const lx = x + 10;
