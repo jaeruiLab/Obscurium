@@ -1,4 +1,4 @@
-# OBSCURIUM — The Daily Dig
+# OBSCURIUM; The Daily Dig
 
 A daily periodic-table trivia game. Each day everyone gets the same 7 prompts, like *"Name a transition metal"*. You have 25 seconds to type an element. Any valid answer scores, but rarer ones score more, and every point drills 10 m deeper into a pixel-art cross-section of the Earth. A perfect dig hits the Moho at 7,000 m.
 
